@@ -12,6 +12,8 @@ namespace DataLayer
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,5 +22,18 @@ namespace DataLayer
                 optionsBuilder.UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = EShopDb; Trusted_Connection = True;");
             }
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // ProductSupplierPrice Join Table
+            modelBuilder.Entity<ProductSupplierPrice>()
+                .HasKey(p => new { p.ProductId, p.SupplierId });
+            modelBuilder.Entity<ProductSupplierPrice>()
+                .HasOne(ps => ps.Product)
+                .WithMany(p => p.ProductSupplierPrices);
+            modelBuilder.Entity<ProductSupplierPrice>()
+                .HasOne(ps => ps.Supplier)
+                .WithMany(s => s.ProductSupplierPrices);
+        }
+
     }
 }
