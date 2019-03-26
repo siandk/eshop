@@ -14,7 +14,7 @@ namespace DataLayer.Entities
         public string Name { get; set; }
         [Required]
         [MaxLength(50)]
-        public string IsoCode { get; set; }
+        public string Code { get; set; }
         [Required]
         [MaxLength(50)]
         // Symbol to display for this currency. eg. €, $, kr.

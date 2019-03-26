@@ -11,7 +11,6 @@ namespace DataLayer.Entities
         public int OrderLineId { get; set; }
         public int OrderId { get; set; }
         public int ProductId { get; set; }
-        public int UomId { get; set; }
         [Required]
         [Column(TypeName = "decimal(5, 2)")]
         public decimal LineQuantity { get; set; }
@@ -20,11 +19,17 @@ namespace DataLayer.Entities
         {
             get
             {
-                return Product.UnitPrice * LineQuantity * Uom.UnitMultiplier;
+                if (Product != null)
+                {
+                    return Product.UnitPrice * LineQuantity;
+                }
+                else
+                {
+                    return 0;
+                }
             }
             protected set { }
         }
-        public UnitOfMeasure Uom { get; set; }
         public Product Product { get; set; }
         public Order Order { get; set; }
     }

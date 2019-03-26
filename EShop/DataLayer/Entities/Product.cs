@@ -12,7 +12,6 @@ namespace DataLayer.Entities
 
         public int? ManufacturerId { get; set; }
         public int CategoryId { get; set; }
-        public int UomId { get; set; }
         [Required]
         [Column(TypeName = "decimal(5, 2)")]
         public decimal UnitPrice { get; set; }
