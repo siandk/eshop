@@ -7,7 +7,7 @@ namespace DataLayer.Entities
 {
     public class ContactInfo
     {
-        public string ContactInfoId { get; set; }
+        public int ContactInfoId { get; set; }
         [MaxLength(50)]
         public string Country { get; set; }
         [MaxLength(50)]
