@@ -8,7 +8,7 @@ namespace DataLayer.Entities
 {
     public class Currency
     {
-        public string CurrencyId { get; set; }
+        public int CurrencyId { get; set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
