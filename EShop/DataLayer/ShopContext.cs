@@ -33,6 +33,7 @@ namespace DataLayer
             modelBuilder.Entity<ProductSupplierPrice>()
                 .HasOne(ps => ps.Supplier)
                 .WithMany(s => s.ProductSupplierPrices);
+
         }
 
     }
