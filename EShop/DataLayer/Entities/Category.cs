@@ -15,5 +15,6 @@ namespace DataLayer.Entities
         public List<Product> Products { get; set; }
         public Category ParentCategory { get; set; }
         public List<Category> ChildCategories { get; set; }
+
     }
 }
