@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ServiceLayer.ShopService.Concrete
 {
@@ -23,13 +24,13 @@ namespace ServiceLayer.ShopService.Concrete
         /// Gets the top level of the category hierarchy. Children are available through the navigation properties
         /// </summary>
         /// <returns></returns>
-        public List<CategoryListDto> GetCategoryTree()
+        public async Task<List<CategoryListDto>> GetCategoryTree()
         {
-            return _context.Categories.FromSql("sp_GetAllCategories")
+            return await _context.Categories.FromSql("sp_GetAllCategories")
                         .MapCategoryToListDto()
-                        .ToList() // Get all categories from the DB, before filtering. Otherwise ChildCategories are not included.
-                        .Where(c => c.ParentCategory == null) // Return only top level categories. Children are available through navigation properties
-                        .ToList();
+                        .ToListAsync(); // Get all categories from the DB, before filtering. Otherwise ChildCategories are not included.
+                        //.Where(c => c.ParentCategory == null) // Return only top level categories. Children are available through navigation properties
+                        //.ToList();
         }
         public IQueryable<CategoryListDto> GetSubCategories(int categoryId)
         {

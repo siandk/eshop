@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ServiceLayer.ShopService.Interfaces
 {
@@ -10,6 +11,6 @@ namespace ServiceLayer.ShopService.Interfaces
     {
         IQueryable<ProductListDto> GetProducts();
         IQueryable<ProductListDto> GetProductsByCategory(int categoryId);
-        ProductDetailDto GetProductById(int productId);
+        Task<ProductDetailDto> GetProductById(int productId);
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ServiceLayer.ShopService.Concrete
 {
@@ -28,14 +29,14 @@ namespace ServiceLayer.ShopService.Concrete
                 .Where(p => p.CategoryId == categoryId)
                 .MapProductToListDto();
         }
-        public ProductDetailDto GetProductById(int productId)
+        public async Task<ProductDetailDto> GetProductById(int productId)
         {
-            return _context.Products
+            return await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Manufacturer)
                 .Where(p => p.ProductId == productId)
                 .MapProductToDetailDto()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
     }

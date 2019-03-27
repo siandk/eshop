@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ServiceLayer.ShopService.QueryObjects
 {
-    public static class CategoryListDtoSelect
+    public static class CategoryDtoSelect
     {
         public static IQueryable<CategoryListDto> MapCategoryToListDto(this IQueryable<Category> categories)
         {
