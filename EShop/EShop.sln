@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{2BA65543-3EAF-4914-8B7E-D1C2E10C9129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EshopClient", "EshopClient\EshopClient.csproj", "{ACC2EF5E-2DEA-4232-9886-A07754F0F443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopClient", "EshopClient\EshopClient.csproj", "{ACC2EF5E-2DEA-4232-9886-A07754F0F443}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

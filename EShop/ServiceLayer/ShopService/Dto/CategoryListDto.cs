@@ -9,8 +9,7 @@ namespace ServiceLayer.ShopService.Dto
     {
         public int CategoryId { get; set; }
         public string Name { get; set; }
-        public List<Category> ChildCategories { get; set; } 
-        public Category ParentCategory { get; set; }
-        public int ProductCount { get; set; }
+        public List<CategoryListDto> ChildCategories { get; set; } 
+        public int? ParentId { get; set; }
     }
 }

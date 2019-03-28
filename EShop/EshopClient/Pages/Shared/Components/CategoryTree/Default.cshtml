@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ServiceLayer.ShopService.Dto.CategoryListDto>
+
+<strong>Categories</strong>
+<ul>
+    @foreach (var category in Model.Where(c => c.ParentId == null))
+    {
+        <li>
+            @category.Name
+            @if (category.ChildCategories.Any())
+            {
+                <ul>
+                    <partial name="/Components/CategoryTree/_CategoryPartial" model="category.ChildCategories" />
+                </ul>
+            }
+        </li>
+    }
+</ul>

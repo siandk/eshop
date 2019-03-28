@@ -9,7 +9,7 @@ namespace ServiceLayer.ShopService.Interfaces
 {
     public interface ICategoryService
     {
+        //List<CategoryListDto> GetSubCategories(int categoryId);
         Task<List<CategoryListDto>> GetCategoryTree();
-        IQueryable<CategoryListDto> GetSubCategories(int categoryId);
     }
 }

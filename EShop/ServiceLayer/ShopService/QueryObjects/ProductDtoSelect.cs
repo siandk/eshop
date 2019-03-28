@@ -9,18 +9,19 @@ namespace ServiceLayer.ShopService.QueryObjects
 {
     public static class ProductDtoSelect
     {
-        public static IQueryable<ProductListDto> MapProductToListDto(this IQueryable<Product> products)
+        public static IQueryable<ProductListDto> MapProductListDto(this IQueryable<Product> products)
         {
             return products.Select(p => new ProductListDto
             {
                 ProductId = p.ProductId,
                 CategoryId = p.CategoryId,
+                Description = p.Description,
                 Name = p.Name,
                 Price = p.UnitPrice
 
             });
         }
-        public static IQueryable<ProductDetailDto> MapProductToDetailDto(this IQueryable<Product> products)
+        public static IQueryable<ProductDetailDto> MapProductDetailDto(this IQueryable<Product> products)
         {
             return products.Select(p => new ProductDetailDto
             {

@@ -21,13 +21,12 @@ namespace ServiceLayer.ShopService.Concrete
         }
         public IQueryable<ProductListDto> GetProducts()
         {
-            return _context.Products.MapProductToListDto();
+            return _context.Products.MapProductListDto();
         }
         public IQueryable<ProductListDto> GetProductsByCategory(int categoryId)
         {
-            return _context.Products
-                .Where(p => p.CategoryId == categoryId)
-                .MapProductToListDto();
+            return _context.Products.FromSql("sp_GetCategoryProducts @p0", categoryId)
+                .MapProductListDto();
         }
         public async Task<ProductDetailDto> GetProductById(int productId)
         {
@@ -35,7 +34,7 @@ namespace ServiceLayer.ShopService.Concrete
                 .Include(p => p.Category)
                 .Include(p => p.Manufacturer)
                 .Where(p => p.ProductId == productId)
-                .MapProductToDetailDto()
+                .MapProductDetailDto()
                 .FirstOrDefaultAsync();
         }
 

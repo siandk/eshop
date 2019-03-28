@@ -20,22 +20,13 @@ namespace ServiceLayer.ShopService.Concrete
         {
             _context = context;
         }
-        /// <summary>
-        /// Gets the top level of the category hierarchy. Children are available through the navigation properties
-        /// </summary>
-        /// <returns></returns>
         public async Task<List<CategoryListDto>> GetCategoryTree()
         {
-            return await _context.Categories.FromSql("sp_GetAllCategories")
-                        .MapCategoryToListDto()
-                        .ToListAsync(); // Get all categories from the DB, before filtering. Otherwise ChildCategories are not included.
+            return await _context.Categories.FromSql("sp_GetSubCategories @p0", 1)
+                        .MapCategoryListDto();
+                        // Get all categories from the DB, before filtering. Otherwise ChildCategories are not included.
                         //.Where(c => c.ParentCategory == null) // Return only top level categories. Children are available through navigation properties
                         //.ToList();
-        }
-        public IQueryable<CategoryListDto> GetSubCategories(int categoryId)
-        {
-            return _context.Categories.FromSql("sp_GetSubCategories @p0", categoryId)
-                .MapCategoryToListDto();
         }
     }
 }

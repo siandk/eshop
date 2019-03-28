@@ -1,0 +1,24 @@
+﻿@page
+@model EshopClient.Pages.Shop.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="col-3">
+    @await Component.InvokeAsync("CategoryTree")
+</div>
+<div class="container">
+    @foreach (var item in Model.Products)
+    {
+        <div class="col-3 m-5">
+            <div class="card" style="width: 18rem;">
+                <h5 class="card-header">@item.Name</h5>
+                <img class="card-img-top" src="..." alt="Product Image" />
+                <div class="card-body">
+                    <p class="card-text">@item.Description</p>
+                    <a href="#" class="card-link">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
