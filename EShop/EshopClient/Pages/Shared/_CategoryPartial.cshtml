@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ServiceLayer.ShopService.Dto.CategoryListDto>
+
+@foreach (var category in Model)
+{
+    <a asp-page="/Shop/Index" asp-route-CategoryId="@category.CategoryId" class="list-group-item">
+        <strong>@category.Name</strong>
+    </a>
+    @if (category.ChildCategories.Any())
+    {
+    <div style="padding-left:15px;">
+        <partial name="_CategoryPartial" model="category.ChildCategories" />
+    </div>
+    }
+}

@@ -11,8 +11,20 @@ namespace ServiceLayer.ShopService.QueryObjects
 {
     public static class CategoryDtoSelect
     {
+        public static async Task<List<CategoryListDto>> MapCategoryListDtoTest(this IQueryable<Category> categories)
+        {
+            var categoriesResult = await categories.ToListAsync();
+            return categoriesResult.Select(c => new CategoryListDto
+            {
+                CategoryId = c.CategoryId,
+                Name = c.Name,
+                ChildCategories = c.ChildCategories.Any() ? c.ChildCategories.MapCategoryListDtoRecursive().ToList() : new List<CategoryListDto>(),
+                ParentId = c.ParentCategoryId
+            }).ToList();
+        }
         public static async Task<List<CategoryListDto>> MapCategoryListDto(this IQueryable<Category> categories)
         {
+            // Fetch categories from DB. Otherwise it's not possible to set the 'ChildCategories' property
             var categoriesResult = await categories.ToListAsync();
 
             return categoriesResult.Where(c => c.ParentCategoryId == null).Select(c => new CategoryListDto

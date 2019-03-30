@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<ServiceLayer.ShopService.Dto.CategoryListDto>
 
 <strong>Categories</strong>
-<ul>
-    @foreach (var category in Model.Where(c => c.ParentId == null))
-    {
-        <li>
-            @category.Name
+<div id="CategoryMenu">
+    <div class="list-group">
+        <a asp-page="/Shop/Index" class="list-group-item border-bottom">All Products</a>
+        @foreach (var category in Model.Where(c => c.ParentId == null))
+        {
+            <a asp-page="/Shop/Index" asp-route-CategoryId="@category.CategoryId" class="list-group-item">
+                <strong>@category.Name</strong>
+            </a>
             @if (category.ChildCategories.Any())
             {
-                <ul>
-                    <partial name="/Components/CategoryTree/_CategoryPartial" model="category.ChildCategories" />
-                </ul>
+            <div style="padding-left:15px;">
+                <partial name="_CategoryPartial" model="category.ChildCategories" />
+            </div>
             }
-        </li>
-    }
-</ul>
+        }
+    </div>
+</div>

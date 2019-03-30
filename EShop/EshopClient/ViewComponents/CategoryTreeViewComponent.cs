@@ -17,7 +17,7 @@ namespace EshopClient.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var categories = await _service.GetCategoryTree();
+            var categories = await _service.GetCategoryTreeInclude();
             return View(categories);
         }
     }

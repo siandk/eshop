@@ -1,24 +1,32 @@
-﻿@page
+﻿@page "{CategoryId:int?}"
 @model EshopClient.Pages.Shop.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
-<div class="col-3">
-    @await Component.InvokeAsync("CategoryTree")
-</div>
-<div class="container">
-    @foreach (var item in Model.Products)
-    {
-        <div class="col-3 m-5">
-            <div class="card" style="width: 18rem;">
-                <h5 class="card-header">@item.Name</h5>
-                <img class="card-img-top" src="..." alt="Product Image" />
-                <div class="card-body">
-                    <p class="card-text">@item.Description</p>
-                    <a href="#" class="card-link">Add to Cart</a>
-                </div>
-            </div>
+@*<div class="row">
+    <div class="col-sm-12 offset-md-3 col-md-9">
+        <form>
+            <p>
+                <select asp-for="Manufacturers" asp-items="Model.Manufacturers">
+                    <option value="">All</option>
+                </select>
+                Product Name: <input type="text" asp-for="SearchString" />
+                <input type="submit" value="Filter" />
+            </p>
+        </form>
+    </div>
+</div>*@
+<div class="row">
+    <div class="col-sm-12 col-md-3">
+        @await Component.InvokeAsync("CategoryTree")
+    </div>
+    <div class="col-sm-12 col-md-9">
+        <div class="row">
+            @foreach (var item in Model.Products)
+            {
+                <partial name="_ProductCardPartial" model="item"/>
+            }
         </div>
-    }
+    </div>
 </div>

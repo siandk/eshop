@@ -11,5 +11,6 @@ namespace ServiceLayer.ShopService.Interfaces
     {
         //List<CategoryListDto> GetSubCategories(int categoryId);
         Task<List<CategoryListDto>> GetCategoryTree();
+        Task<List<CategoryListDto>> GetCategoryTreeInclude();
     }
 }

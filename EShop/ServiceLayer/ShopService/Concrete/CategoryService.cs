@@ -20,6 +20,10 @@ namespace ServiceLayer.ShopService.Concrete
         {
             _context = context;
         }
+        public async Task<List<CategoryListDto>> GetCategoryTreeInclude()
+        {
+            return await _context.Categories.Include(c => c.ChildCategories).Where(c => c.ParentCategoryId == null).MapCategoryListDtoTest();
+        }
         public async Task<List<CategoryListDto>> GetCategoryTree()
         {
             return await _context.Categories.FromSql("sp_GetSubCategories @p0", 1)

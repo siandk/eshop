@@ -10,7 +10,7 @@ namespace ServiceLayer.ShopService.Interfaces
     public interface IProductService
     {
         IQueryable<ProductListDto> GetProducts();
-        IQueryable<ProductListDto> GetProductsByCategory(int categoryId);
+        Task<List<ProductListDto>> GetProductsByCategory(int categoryId);
         Task<ProductDetailDto> GetProductById(int productId);
     }
 }

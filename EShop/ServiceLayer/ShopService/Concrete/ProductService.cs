@@ -23,10 +23,10 @@ namespace ServiceLayer.ShopService.Concrete
         {
             return _context.Products.MapProductListDto();
         }
-        public IQueryable<ProductListDto> GetProductsByCategory(int categoryId)
+        public async Task<List<ProductListDto>> GetProductsByCategory(int categoryId)
         {
-            return _context.Products.FromSql("sp_GetCategoryProducts @p0", categoryId)
-                .MapProductListDto();
+            return await _context.Products.FromSql("sp_GetCategoryProducts @p0", categoryId)
+                .MapProductListDtoFromProcedure();
         }
         public async Task<ProductDetailDto> GetProductById(int productId)
         {

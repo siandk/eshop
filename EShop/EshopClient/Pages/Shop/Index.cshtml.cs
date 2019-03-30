@@ -23,17 +23,23 @@ namespace EshopClient.Pages.Shop
 
         [BindProperty(SupportsGet = true)]
         public int? CategoryId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
         public IList<ProductListDto> Products { get;set; }
 
         public async Task OnGetAsync()
         {
             if (CategoryId.HasValue)
             {
-                Products = await _service.GetProductsByCategory(CategoryId.Value).ToListAsync();
+                Products = await _service.GetProductsByCategory(CategoryId.Value);
             }
             else
             {
                 Products = await _service.GetProducts().ToListAsync();
+            }
+            if (SearchString != null)
+            {
+                Products = Products.Where(p => p.Name.Contains(SearchString)).ToList();
             }
         }
     }
