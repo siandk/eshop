@@ -12,25 +12,17 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ShopService.Concrete
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService : GenericService, ICategoryService
     {
-        private readonly ShopContext _context;
-
-        public CategoryService(ShopContext context)
+        public CategoryService(ShopContext _context) : base(_context) { }
+        public IQueryable<Category> GetCategoryTree()
         {
-            _context = context;
+            return _context.Categories
+                        .Include(c => c.ChildCategories);
         }
-        public async Task<List<CategoryListDto>> GetCategoryTreeInclude()
+        public async Task<Category> GetCategoryById(int? id)
         {
-            return await _context.Categories.Include(c => c.ChildCategories).Where(c => c.ParentCategoryId == null).MapCategoryListDtoTest();
-        }
-        public async Task<List<CategoryListDto>> GetCategoryTree()
-        {
-            return await _context.Categories.FromSql("sp_GetSubCategories @p0", 1)
-                        .MapCategoryListDto();
-                        // Get all categories from the DB, before filtering. Otherwise ChildCategories are not included.
-                        //.Where(c => c.ParentCategory == null) // Return only top level categories. Children are available through navigation properties
-                        //.ToList();
+            return await _context.Categories.FirstOrDefaultAsync(c => c.CategoryId == id);
         }
     }
 }

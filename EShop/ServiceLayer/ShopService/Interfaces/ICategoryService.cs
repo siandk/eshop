@@ -1,4 +1,5 @@
-﻿using ServiceLayer.ShopService.Dto;
+﻿using DataLayer.Entities;
+using ServiceLayer.ShopService.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,10 @@ namespace ServiceLayer.ShopService.Interfaces
 {
     public interface ICategoryService
     {
-        //List<CategoryListDto> GetSubCategories(int categoryId);
-        Task<List<CategoryListDto>> GetCategoryTree();
-        Task<List<CategoryListDto>> GetCategoryTreeInclude();
+        IQueryable<Category> GetCategoryTree();
+        Task<Category> GetCategoryById(int? id);
+        Task Create<T>(T model) where T : class;
+        Task Update<T>(T model) where T : class;
+        Task Delete<T>(T model) where T : class;
     }
 }

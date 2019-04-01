@@ -1,4 +1,5 @@
 ﻿using DataLayer;
+using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.ShopService.Dto;
 using ServiceLayer.ShopService.Interfaces;
@@ -6,37 +7,59 @@ using ServiceLayer.ShopService.QueryObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.ShopService.Concrete
 {
-    public class ProductService : IProductService
+    public class ProductService : GenericService, IProductService
     {
-        private readonly ShopContext _context;
-
-        public ProductService(ShopContext context)
+        public ProductService(ShopContext context) : base(context)
         {
-            _context = context;
         }
-        public IQueryable<ProductListDto> GetProducts()
+        public IQueryable<ProductDto> GetProducts(int? categoryId)
         {
-            return _context.Products.MapProductListDto();
+            if (categoryId.HasValue)
+            {
+                return GetProductsByCategory(categoryId.Value).MapProductDto();
+            }
+            else
+            {
+                return GetAllProducts().MapProductDto();
+            }
         }
-        public async Task<List<ProductListDto>> GetProductsByCategory(int categoryId)
+        private IQueryable<Product> GetAllProducts()
         {
-            return await _context.Products.FromSql("sp_GetCategoryProducts @p0", categoryId)
-                .MapProductListDtoFromProcedure();
+            return _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Manufacturer)
+                .AsNoTracking();
         }
-        public async Task<ProductDetailDto> GetProductById(int productId)
+        private IQueryable<Product> GetProductsByCategory(int categoryId)
+        {
+            return _context.Categories
+                    .Include(c => c.Products)
+                    .ThenInclude(p => p.Manufacturer)
+                    .Where(c => c.ParentPath.Contains($"/{categoryId}/") || c.CategoryId == categoryId)
+                    .SelectMany(c => c.Products)
+                    .AsNoTracking();
+        }
+        public async Task<ProductDto> GetProductById(int? productId)
         {
             return await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Manufacturer)
-                .Where(p => p.ProductId == productId)
-                .MapProductDetailDto()
-                .FirstOrDefaultAsync();
+                .MapProductDto()
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
-
+        public IQueryable<ProductSupplierPrice> GetProductPrices(int? productId)
+        {
+            return _context.Products
+                        .Include(p => p.ProductSupplierPrices)
+                        .ThenInclude(ps => ps.Supplier)
+                        .SelectMany(p => p.ProductSupplierPrices)
+                        .Where(ps => ps.ProductId == productId);
+        }
     }
 }
