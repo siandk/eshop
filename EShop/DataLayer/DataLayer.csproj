@@ -10,6 +10,7 @@
     <Compile Remove="Migrations\20190326080138_initial.cs" />
     <Compile Remove="Migrations\20190326082015_initial.cs" />
     <Compile Remove="Migrations\20190326083805_initial.cs" />
+    <Compile Remove="Migrations\20190330083911_test.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,9 +18,12 @@ namespace DataLayer.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        [MaxLength(150)]
+        [MaxLength(250)]
         public string Description { get; set; }
         public bool Published { get; set; }
+        public bool Featured { get; set; }
+        [MaxLength(50)]
+        public string Summary { get; set; }
         public Category Category { get; set; }
         public Manufacturer Manufacturer { get; set; }
         public List<ProductSupplierPrice> ProductSupplierPrices { get; set; }

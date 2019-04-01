@@ -31,6 +31,8 @@ namespace DataLayer.Migrations
 
                     b.Property<int?>("ParentCategoryId");
 
+                    b.Property<string>("ParentPath");
+
                     b.HasKey("CategoryId");
 
                     b.HasIndex("ParentCategoryId");
@@ -222,7 +224,9 @@ namespace DataLayer.Migrations
                     b.Property<int>("CategoryId");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(150);
+                        .HasMaxLength(250);
+
+                    b.Property<bool>("Featured");
 
                     b.Property<int?>("ManufacturerId");
 
@@ -231,6 +235,9 @@ namespace DataLayer.Migrations
                         .HasMaxLength(50);
 
                     b.Property<bool>("Published");
+
+                    b.Property<string>("Summary")
+                        .HasMaxLength(50);
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(5, 2)");
@@ -248,6 +255,7 @@ namespace DataLayer.Migrations
                         {
                             ProductId = 1,
                             CategoryId = 1,
+                            Featured = false,
                             Name = "Test Product 01",
                             Published = false,
                             UnitPrice = 30.0m
@@ -256,6 +264,7 @@ namespace DataLayer.Migrations
                         {
                             ProductId = 2,
                             CategoryId = 2,
+                            Featured = false,
                             Name = "Test Product 02",
                             Published = false,
                             UnitPrice = 45.0m
@@ -264,6 +273,7 @@ namespace DataLayer.Migrations
                         {
                             ProductId = 3,
                             CategoryId = 3,
+                            Featured = false,
                             Name = "Test Product 03",
                             Published = false,
                             UnitPrice = 30.5m
@@ -272,6 +282,7 @@ namespace DataLayer.Migrations
                         {
                             ProductId = 4,
                             CategoryId = 4,
+                            Featured = false,
                             Name = "Test Product 04",
                             Published = false,
                             UnitPrice = 10.0m
@@ -280,6 +291,7 @@ namespace DataLayer.Migrations
                         {
                             ProductId = 5,
                             CategoryId = 5,
+                            Featured = false,
                             Name = "Test Product 05",
                             Published = false,
                             UnitPrice = 130.0m

@@ -30,7 +30,6 @@ namespace DataLayer
                 .HasOne(ps => ps.Supplier)
                 .WithMany(s => s.ProductSupplierPrices);
 
-
             // Seed Data
             modelBuilder.Entity<Category>().HasData(new Category
             {
