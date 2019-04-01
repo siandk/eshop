@@ -15,22 +15,6 @@ namespace DataLayer.Entities
         [Required]
         public int CustomerId { get; set; }
         [Column(TypeName = "decimal(5, 2)")]
-        public decimal AmountCurrency
-        {
-            get
-            {
-                if (Currency != null)
-                {
-                    return AmountTotal * Currency.CurrencyRate;
-                }
-                else
-                {
-                    return AmountTotal;
-                }
-            }
-            protected set { }
-        }
-        [Column(TypeName = "decimal(5, 2)")]
         public decimal AmountTotal
         {
             get
@@ -50,7 +34,6 @@ namespace DataLayer.Entities
         public string OrderNote { get; set; }
         public DateTime OrderDate { get; set; }
         public Customer Customer { get; set; }
-        public Currency Currency { get; set; }
         public ICollection<OrderLine> OrderLines { get; set; }
     }
 }

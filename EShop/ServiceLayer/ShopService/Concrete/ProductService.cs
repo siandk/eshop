@@ -18,7 +18,7 @@ namespace ServiceLayer.ShopService.Concrete
         public ProductService(ShopContext context) : base(context)
         {
         }
-        public IQueryable<ProductDto> GetProducts(int? categoryId)
+        public IQueryable<ProductDto> GetProducts(int? categoryId = null)
         {
             if (categoryId.HasValue)
             {
@@ -53,13 +53,18 @@ namespace ServiceLayer.ShopService.Concrete
                 .MapProductDto()
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
-        public IQueryable<ProductSupplierPrice> GetProductPrices(int? productId)
+        public IQueryable<ProductSupplierPrice> GetProductPrices(int? productId = null)
         {
-            return _context.Products
+            var productPrices = _context.Products
                         .Include(p => p.ProductSupplierPrices)
                         .ThenInclude(ps => ps.Supplier)
-                        .SelectMany(p => p.ProductSupplierPrices)
-                        .Where(ps => ps.ProductId == productId);
+                        .SelectMany(p => p.ProductSupplierPrices);
+            return !productId.HasValue ? productPrices : productPrices.Where(ps => ps.ProductId == productId.Value);
+
+        }
+        public IQueryable<Manufacturer> GetProductManufacturers()
+        {
+            return _context.Products.Where(p => p.ManufacturerId != null).Include(p => p.Manufacturer).Select(p => p.Manufacturer).Distinct();
         }
     }
 }

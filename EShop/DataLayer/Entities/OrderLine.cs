@@ -30,6 +30,8 @@ namespace DataLayer.Entities
             }
             protected set { }
         }
+        [Column(TypeName = "decimal(5, 2)")]
+        public decimal UnitCostPrice { get; set; }
         public Product Product { get; set; }
         public Order Order { get; set; }
     }

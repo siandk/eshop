@@ -1,10 +1,43 @@
-﻿@page
+﻿@page "{id:int?}"
 @model EshopClient.Pages.Admin.Products.EditModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
+<div class="modal fade" role="dialog" id="priceCreate" aria-labelledby="priceCreateLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-page-handler="priceCreate" method="post">
+                <input type="hidden" asp-for="ProductPrice.ProductId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="priceCreateLabel">Create Product Price</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="ProductPrice.Price" class="control-label"></label>
+                        <input asp-for="ProductPrice.Price" class="form-control" />
+                        <span asp-validation-for="ProductPrice.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductPrice.Supplier" class="control-label"/>
+                        <select asp-for="ProductPrice.SupplierId" asp-items="Model.Suppliers"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <h1>Edit</h1>
 
 <h4>ProductDto</h4>
@@ -15,8 +48,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductDto.ProductId" />
             <div class="form-group">
-                <select asp-for="ProductDto.CategoryId" asp-items="Model.Categories">
-                </select>
+                <select asp-for="ProductDto.CategoryId" asp-items="Model.Categories"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ProductDto.Name" class="control-label"></label>
@@ -24,8 +56,7 @@
                 <span asp-validation-for="ProductDto.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <select asp-for="ProductDto.ManufacturerId" asp-items="Model.Manufacturers">
-                </select>
+                <select asp-for="ProductDto.ManufacturerId" asp-items="Model.Manufacturers"></select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -70,7 +101,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.ProductPrices[0].Supplier.Name)
                     </th>
-                    <th><button class="btn btn-success">Create New</button></th>
+                    <th><button class="btn btn-success" data-toggle="modal" data-target="#priceCreate">Create New</button></th>
                 </tr>
             </thead>
             <tbody>
@@ -80,8 +111,9 @@
                         <td>@item.Price</td>
                         <td>@item.Supplier.Name</td>
                         <td>
-                            <button class="btn btn-primary">Edit</button> |
-                            <button class="btn btn-danger">Delete</button>
+                            <form method="post" asp-page-handler="PriceDelete" asp-route-supplierId="@item.SupplierId" asp-route-productId="@item.ProductId">
+                                <input type="submit" value="Delete" class="btn btn-danger"/>
+                            </form>
                         </td>
                     </tr>
                 }
@@ -89,7 +121,6 @@
         </table>
     </div>
 </div>
-
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>

@@ -7,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>ProductDto</h4>
+<h4>Supplier</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,6 +18,36 @@
                 <label asp-for="Supplier.Name" class="control-label"></label>
                 <input asp-for="Supplier.Name" class="form-control" />
                 <span asp-validation-for="Supplier.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.ContactInfo.Country" class="control-label"></label>
+                <input asp-for="Supplier.ContactInfo.Country" class="form-control" />
+                <span asp-validation-for="Supplier.ContactInfo.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.ContactInfo.Street" class="control-label"></label>
+                <input asp-for="Supplier.ContactInfo.Street" class="form-control" />
+                <span asp-validation-for="Supplier.ContactInfo.Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.ContactInfo.City" class="control-label"></label>
+                <input asp-for="Supplier.ContactInfo.City" class="form-control" />
+                <span asp-validation-for="Supplier.ContactInfo.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.ContactInfo.Zip" class="control-label"></label>
+                <input asp-for="Supplier.ContactInfo.Zip" class="form-control" />
+                <span asp-validation-for="Supplier.ContactInfo.Zip" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.ContactInfo.Phone" class="control-label"></label>
+                <input asp-for="Supplier.ContactInfo.Phone" class="form-control" />
+                <span asp-validation-for="Supplier.ContactInfo.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.ContactInfo.Email" class="control-label"></label>
+                <input asp-for="Supplier.ContactInfo.Email" class="form-control" />
+                <span asp-validation-for="Supplier.ContactInfo.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

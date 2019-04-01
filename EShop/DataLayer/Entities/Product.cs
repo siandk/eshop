@@ -24,6 +24,7 @@ namespace DataLayer.Entities
         public bool Featured { get; set; }
         [MaxLength(50)]
         public string Summary { get; set; }
+        public string ImageUrl { get; set; }
         public Category Category { get; set; }
         public Manufacturer Manufacturer { get; set; }
         public List<ProductSupplierPrice> ProductSupplierPrices { get; set; }

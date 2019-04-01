@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ShopService.Interfaces
 {
-    public class GenericService
+    public class GenericService : IGenericService
     {
         protected readonly ShopContext _context;
 

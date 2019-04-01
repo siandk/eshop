@@ -25,8 +25,23 @@
         <div class="row">
             @foreach (var item in Model.Products)
             {
-                <partial name="_ProductCardPartial" model="item"/>
+                <partial name="_ProductCardPartial" model="item" />
             }
+        </div>
+        <div class="row text-center mt-3">
+            <div class="col-12">
+                @{
+                    var prevDisabled = !Model.Products.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Products.HasNextPage ? "disabled" : "";
+                }
+                <a class="btn btn-primary @prevDisabled" asp-for="./Index" asp-route-PageNum="@(Model.Products.PageIndex - 1)" asp-route-Name="@Model.Name" asp-route-ManufacturerName="@Model.ManufacturerName">Previous</a>
+                @for (int i = 1; i <= Model.Products.TotalPages; i++)
+                {
+                    var activeNum = Model.PageNum == i ? "btn-light disabled" : "";
+                    <a asp- class="btn @activeNum" asp-for="./Index" asp-route-PageNum="@i" asp-route-Name="@Model.Name" asp-route-ManufacturerName="@Model.ManufacturerName">@i</a>
+                }
+                <a class="btn btn-primary @nextDisabled" asp-for="./Index" asp-route-PageNum="@(Model.Products.PageIndex + 1)" asp-route-Name="@Model.Name" asp-route-ManufacturerName="@Model.ManufacturerName">Next</a>
+            </div>
         </div>
     </div>
 </div>

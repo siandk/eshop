@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ShopService.Interfaces
 {
-    public interface IManufacturerService
+    public interface IManufacturerService : IGenericService
     {
         IQueryable<Manufacturer> GetManufacturers();
         Task<Manufacturer> GetManufacturerById(int? id);
-        Task Create<T>(T model) where T : class;
-        Task Update<T>(T model) where T : class;
-        Task Delete<T>(T model) where T : class;
     }
 }

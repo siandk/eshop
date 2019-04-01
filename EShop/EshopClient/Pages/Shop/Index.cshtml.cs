@@ -11,6 +11,7 @@ using ServiceLayer.ShopService.Interfaces;
 using ServiceLayer.ShopService.Dto;
 using ServiceLayer.ShopService.QueryObjects;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using EshopClient.Data;
 
 namespace EshopClient.Pages.Shop
 {
@@ -30,28 +31,26 @@ namespace EshopClient.Pages.Shop
         [BindProperty(SupportsGet = true)]
         public string ManufacturerName { get; set; }
 
-        public List<ProductDto> Products { get;set; }
+        public PaginatedList<ProductDto> Products { get;set; }
         public SelectList Manufacturers { get; set; }
-
+        [BindProperty(SupportsGet = true)]
+        public int? PageNum { get; set; }
 
         public async Task OnGetAsync()
         {
             var products = _service.GetProducts(CategoryId);
             if (!string.IsNullOrEmpty(Name))
             {
+                PageNum = 1;
                 products = products.ProductFilterBy(ProductsFilterBy.ByName, Name);
             }
             if (!string.IsNullOrEmpty(ManufacturerName))
             {
                 products = products.ProductFilterBy(ProductsFilterBy.ByManufacturer, ManufacturerName);
             }
-            Products = await products.ToListAsync();
-            if (Products.Any(p => p.ManufacturerName != null))
-            {
-                Manufacturers = new SelectList(Products
-                                                .Where(p => p.ManufacturerName != null)
-                                                .Select(p => new SelectListItem() { Text = p.ManufacturerName, Value = p.ManufacturerName }));
-            }
+            Products = await PaginatedList<ProductDto>.CreateAsync(products, PageNum ?? 1, 3);
+            var manuf = _service.GetProductManufacturers().ToList();
+            Manufacturers = new SelectList(_service.GetProductManufacturers().ToList(), "Name", "Name");
         }
     }
 }

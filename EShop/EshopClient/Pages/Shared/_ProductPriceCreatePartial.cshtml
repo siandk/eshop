@@ -1,0 +1,35 @@
+﻿@model EshopClient.Pages.Admin.Products.EditModel
+
+
+<div class="modal fade" role="dialog" id="priceCreate" aria-labelledby="priceCreateLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-page-handler="price" method="post">
+                <input type="hidden" asp-for="ProductPrice.ProductId"/>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="priceCreateLabel">Create Product Price</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="ProductPrice.Price" class="control-label"></label>
+                        <input asp-for="ProductPrice.Price" class="form-control"/>
+                        <span asp-validation-for="ProductPrice.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <select asp-for="ProductPrice.SupplierId" asp-items="@Model.Suppliers"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary"/>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

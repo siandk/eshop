@@ -18,12 +18,12 @@ namespace ServiceLayer.ShopService.Concrete
 
         public async Task<Supplier> GetSupplierById(int? id)
         {
-            return await _context.Suppliers.FirstOrDefaultAsync(m => m.SupplierId == id);
+            return await _context.Suppliers.Include(s => s.ContactInfo).FirstOrDefaultAsync(m => m.SupplierId == id);
         }
 
         public IQueryable<Supplier> GetSuppliers()
         {
-            return _context.Suppliers;
+            return _context.Suppliers.AsNoTracking();
         }
 
     }
