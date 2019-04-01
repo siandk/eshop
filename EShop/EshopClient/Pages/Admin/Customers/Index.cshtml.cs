@@ -4,15 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using DataLayer;
-using DataLayer.Entities;
-using ServiceLayer.ShopService.Interfaces;
-using ServiceLayer.ShopService.Dto;
-using ServiceLayer.ShopService.QueryObjects;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ShopService.Dto;
+using ServiceLayer.ShopService.Interfaces;
+using ServiceLayer.ShopService.QueryObjects;
 
-namespace EshopClient.Pages.Shop
+namespace EshopClient.Pages.Admin.Customers
 {
     public class IndexModel : PageModel
     {
@@ -30,7 +28,7 @@ namespace EshopClient.Pages.Shop
         [BindProperty(SupportsGet = true)]
         public string ManufacturerName { get; set; }
 
-        public List<ProductDto> Products { get;set; }
+        public List<ProductDto> Products { get; set; }
         public SelectList Manufacturers { get; set; }
 
 

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ShopService.Dto;
 using ServiceLayer.ShopService.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,11 @@ namespace EshopClient.ViewComponents
         {
             _service = service;
         }
+        List<Category> Categories { get; set; }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var categories = await _service.GetCategoryTreeInclude();
-            return View(categories);
+            Categories = await _service.GetCategoryTree().ToListAsync();
+            return View(Categories);
         }
     }
 }

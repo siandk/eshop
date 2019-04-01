@@ -17,4 +17,12 @@
     <ProjectReference Include="..\ServiceLayer\ServiceLayer.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Pages\Admin\Manufacturers\" />
+    <Folder Include="Pages\Admin\Customers\" />
+    <Folder Include="Pages\Admin\Currencies\" />
+    <Folder Include="Pages\Admin\Suppliers\" />
+  </ItemGroup>
+
 </Project>

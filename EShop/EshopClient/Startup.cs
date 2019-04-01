@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,7 +38,10 @@ namespace EshopClient
             services.AddDbContext<ShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EshopDbContext")));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IManufacturerService, ManufacturerService>();
+            services.AddScoped<ISupplierService, SupplierService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

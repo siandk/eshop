@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using DataLayer;
-using DataLayer.Entities;
+using ServiceLayer.ShopService.Dto;
+using ServiceLayer.ShopService.Interfaces;
 
-namespace EshopClient.Pages.Shop
+namespace EshopClient.Pages.Admin.Customers
 {
     public class DeleteModel : PageModel
     {
-        private readonly DataLayer.ShopContext _context;
+        private readonly IProductService _service;
 
-        public DeleteModel(DataLayer.ShopContext context)
+        public DeleteModel(IProductService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [BindProperty]
-        public Product Product { get; set; }
+        public ProductDto ProductDto { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,11 +30,9 @@ namespace EshopClient.Pages.Shop
                 return NotFound();
             }
 
-            Product = await _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Manufacturer).FirstOrDefaultAsync(m => m.ProductId == id);
+            ProductDto = await _service.GetProductById(id);
 
-            if (Product == null)
+            if (ProductDto == null)
             {
                 return NotFound();
             }
@@ -47,12 +46,11 @@ namespace EshopClient.Pages.Shop
                 return NotFound();
             }
 
-            Product = await _context.Products.FindAsync(id);
+            ProductDto = await _service.GetProductById(id);
 
-            if (Product != null)
+            if (ProductDto != null)
             {
-                _context.Products.Remove(Product);
-                await _context.SaveChangesAsync();
+                await _service.Delete<Product>(ProductDto.MapToProduct());
             }
 
             return RedirectToPage("./Index");

@@ -11,9 +11,9 @@
             </a>
             @if (category.ChildCategories.Any())
             {
-            <div style="padding-left:10px;">
-                <partial name="_CategoryPartial" model="category.ChildCategories" />
-            </div>
+                <div style="padding-left:10px;">
+                    <partial name="_CategoryPartial" model="category.ChildCategories" />
+                </div>
             }
         }
     </div>

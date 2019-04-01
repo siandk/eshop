@@ -1,0 +1,28 @@
+﻿@page
+@model EshopClient.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Administration</h1>
+<div class="row">
+    <div class="col-sm-12 col-md-3">
+        <a asp-page="./Products/Index"><h3>Products</h3></a>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <a asp-page="./Categories/Index"><h3>Categories</h3></a>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <a asp-page="./Manufacturers/Index"><h3>Manufacturers</h3></a>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <a asp-page="./Customers/Index"><h3>Customers</h3></a>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <a asp-page="./Suppliers/Index"><h3>Suppliers</h3></a>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <a asp-page="./Currencies/Index"><h3>Currencies</h3></a>
+    </div>
+</div>
+

@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DataLayer.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ShopService.Dto;
+using ServiceLayer.ShopService.Interfaces;
+
+namespace EshopClient.Pages.Admin.Currencies
+{
+    public class EditModel : PageModel
+    {
+        private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
+        private readonly IManufacturerService _manufacturerService;
+
+
+        public EditModel(IProductService productService, ICategoryService categoryService, IManufacturerService manufacturerService)
+        {
+            _productService = productService;
+            _categoryService = categoryService;
+            _manufacturerService = manufacturerService;
+        }
+
+        [BindProperty]
+        public ProductDto ProductDto { get; set; }
+
+        public SelectList Categories => new SelectList(_categoryService.GetCategoryTree().ToList(), "CategoryId", "Name");
+        public SelectList Manufacturers => new SelectList(_manufacturerService.GetManufacturers().ToList(), "ManufacturerId", "Name");
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ProductDto = await _productService.GetProductById(id);
+
+            if (ProductDto == null)
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            await _productService.Update<Product>(ProductDto.MapToProduct());
+            return RedirectToPage("./Index");
+        }
+
+        //private bool ProductDtoExists(int id)
+        //{
+        //    return _context.ProductDto.Any(e => e.ProductId == id);
+        //}
+    }
+}

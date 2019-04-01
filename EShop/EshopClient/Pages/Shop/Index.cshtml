@@ -4,19 +4,19 @@
 @{
     ViewData["Title"] = "Index";
 }
-@*<div class="row">
+<div class="row">
     <div class="col-sm-12 offset-md-3 col-md-9">
         <form>
             <p>
-                <select asp-for="Manufacturers" asp-items="Model.Manufacturers">
+                Manufacturer: <select asp-for="ManufacturerName" asp-items="Model.Manufacturers">
                     <option value="">All</option>
                 </select>
-                Product Name: <input type="text" asp-for="SearchString" />
-                <input type="submit" value="Filter" />
+                Product Name: <input type="text" asp-for="Name" />
+                <input type="submit" value="Filter" class="btn btn-primary" />
             </p>
         </form>
     </div>
-</div>*@
+</div>
 <div class="row">
     <div class="col-sm-12 col-md-3">
         @await Component.InvokeAsync("CategoryTree")

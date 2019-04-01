@@ -2,32 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using DataLayer;
-using DataLayer.Entities;
+using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ShopService.Dto;
+using ServiceLayer.ShopService.Interfaces;
 
-namespace EshopClient.Pages.Shop
+namespace EshopClient.Pages.Admin.Categories
 {
     public class CreateModel : PageModel
     {
-        private readonly DataLayer.ShopContext _context;
+        private readonly ICategoryService _service;
 
-        public CreateModel(DataLayer.ShopContext context)
+
+        public CreateModel(ICategoryService categoryService)
         {
-            _context = context;
+            _service = categoryService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
-        ViewData["ManufacturerId"] = new SelectList(_context.Manufacturers, "ManufacturerId", "Name");
             return Page();
         }
 
         [BindProperty]
-        public Product Product { get; set; }
+        public Category Category { get; set; }
+        public SelectList ParentCategory => new SelectList(_service.GetCategoryTree().ToList(), "CategoryId", "Name");
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -35,9 +37,7 @@ namespace EshopClient.Pages.Shop
             {
                 return Page();
             }
-
-            _context.Products.Add(Product);
-            await _context.SaveChangesAsync();
+            await _service.Create<Category>(Category);
 
             return RedirectToPage("./Index");
         }
