@@ -182,7 +182,7 @@ namespace EshopClient.Data
                     ManufacturerId = 5,
                     UnitPrice = 1999.95M,
                     Summary = "Flot stol i eksklusivt design",
-                    Description = "En stol der er alle pengene værd, som du bestemt ikke får ondt i røven af",
+                    Description = "En stol der er alle pengene værd",
                     CategoryId = 6,
                 },
                 new Product()
@@ -400,8 +400,7 @@ namespace EshopClient.Data
                     Summary = "Simpel stol, let at anvende",
                     Description = "Denne spisestol fra producenten Stol.dk kan både bruges til at sidde på, og til at stå på",
                     CategoryId = 6,
-                },
-                );
+                });
         }
     }
 }

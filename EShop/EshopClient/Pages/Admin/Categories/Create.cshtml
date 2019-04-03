@@ -19,7 +19,7 @@
                 <span asp-validation-for="Category.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <select asp-for="Category.ParentCategoryId" asp-items="Model.ParentCategory"></select>
+                Parent Category: <select asp-for="Category.ParentCategoryId" asp-items="Model.ParentCategory"><option value="">None</option></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

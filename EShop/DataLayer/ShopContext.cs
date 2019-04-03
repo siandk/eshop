@@ -29,6 +29,22 @@ namespace DataLayer
                 .HasOne(ps => ps.Supplier)
                 .WithMany(s => s.ProductSupplierPrices);
 
+            //
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Category path index
+            modelBuilder.Entity<Category>()
+                .HasIndex(c => c.ParentPath);
+
+            // Order default date
+            modelBuilder.Entity<Order>()
+                .Property(o => o.OrderDate)
+                .HasDefaultValueSql("GETDATE()");   
+
         }
 
     }

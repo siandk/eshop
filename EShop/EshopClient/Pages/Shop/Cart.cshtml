@@ -1,0 +1,58 @@
+﻿@page
+@model EshopClient.Pages.Shop.CartModel
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<div class="container">
+    @if (@Model.Order != null)
+    {
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6">@Model.Order.OrderLines.Sum(l => l.LinePrice)</div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Order.OrderLines[0].ProductName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Order.OrderLines[0].Quantity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Order.OrderLines[0].LinePrice)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Order.OrderLines)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                   @(item.ProductUnitPrice * item.Quantity)
+                                </td>
+                                <td>
+                                    <form method="post" asp-page-handler="remove">
+                                        <input type="hidden" asp-for="@Model.ProductId" value="@item.ProductId" />
+                                        <input type="submit" value="Delete" class="btn btn-danger" />
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

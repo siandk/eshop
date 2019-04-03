@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using DataLayer.Entities;
+using EshopTest.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -13,13 +14,8 @@ namespace EshopTest.DataLayer
         [TestMethod]
         public void set_category_parentpath()
         {
-            // ARRANGE
-            var options = new DbContextOptionsBuilder<ShopContext>()
-                .UseInMemoryDatabase(databaseName: "set_category_parentpath")
-                .Options;
-
             // ACT
-            using (var context = new ShopContext(options))
+            using (var context = new ShopContext(SqlContext.TestDbContextOptions()))
             {
                 List<Category> categoryList = new List<Category>()
                 {
@@ -32,7 +28,10 @@ namespace EshopTest.DataLayer
                 context.SaveChanges();
 
             // ASSERT
-                Category category = context.Categories.Include(c => c.ChildCategories).Where(c => c.ParentCategoryId == 3).First();
+                Category category = context.Categories
+                                            .Include(c => c.ChildCategories)
+                                            .Where(c => c.ParentCategoryId == 3)
+                                            .First();
                 Assert.AreEqual("Layer 3", category.Name); // Check that the correct category has been fetched
                 Assert.AreEqual("/1/2/3/", category.ParentPath); // Check that the parentpath has been set correctly
             }
@@ -72,8 +71,13 @@ namespace EshopTest.DataLayer
                 context.SaveChanges();
 
                 // ACT
-                var categories = context.Categories.Include(c => c.ChildCategories).Include(c => c.Products).Where(c => c.ParentPath != null && c.ParentPath.Contains("/2/")).ToList();
+                var categories = context.Categories
+                                        .Include(c => c.ChildCategories)
+                                        .Include(c => c.Products)
+                                        .Where(c => c.ParentPath != null && c.ParentPath.Contains("/2/"))
+                                        .ToList();
                 var products = categories.SelectMany(c => c.Products).ToList();
+                // ASSERT
                 Assert.AreEqual(4, products.Count());
             }
 

@@ -3,16 +3,19 @@
 
 <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mt-3">
     <div class="card">
-        <a asp-page="./Details" asp-route-id="@Model.ProductId"><h5 class="card-header">@Model.Name</h5></a>
-        <img class="card-img-top" src="..." alt="Product Image" />
+        <a asp-page="/Shop/Details" asp-route-id="@Model.ProductId"><h5 class="card-header">@Html.DisplayFor(model => model.Name)</h5></a>
+        <img class="card-img-top" src="@Model.ImageUrl" alt="Product Image" />
         <div class="card-body">
-            <p class="card-text">@Model.Description</p>
+            <p class="card-text">@Html.DisplayFor(model => model.Summary)</p>
             <div class="row">
                 <div class="col-7">
-                    <strong>@Model.UnitPrice</strong>
+                    <strong>@Html.DisplayFor(model => model.UnitPrice)</strong>
                 </div>
                 <div class="col-5">
-                    <a href="#" class="card-link"><i class="fas fa-cart-arrow-down"></i></a>
+                    <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-url="/Shop/Cart?handler=add">
+                        <input type="hidden" name="ProductId" value="@Model.ProductId" />
+                        <input type="submit" class="btn btn-primary" value="Add to cart" />
+                    </form>
                 </div>
             </div>
         </div>

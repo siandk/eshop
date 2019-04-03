@@ -25,7 +25,7 @@ namespace EshopClient.Pages.Admin.Categories
         [BindProperty]
         public Category Category { get; set; }
 
-        public SelectList ParentCategory => new SelectList(_service.GetCategoryTree().ToList(), "CategoryId", "Name");
+        public SelectList ParentCategory { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -34,7 +34,9 @@ namespace EshopClient.Pages.Admin.Categories
             {
                 return NotFound();
             }
-
+            ParentCategory = new SelectList(await _service.GetCategoryTree()
+                                                    .Where(c => (!c.ParentPath.Contains($"/{id}/") || c.ParentPath == null) && c.CategoryId != id)
+                                                    .ToListAsync(), "CategoryId", "Name");
             Category = await _service.GetCategoryById(id);
 
             if (Category == null)

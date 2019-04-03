@@ -13,7 +13,9 @@ namespace DataLayer.Entities
         public int? ManufacturerId { get; set; }
         public int CategoryId { get; set; }
         [Required]
-        [Column(TypeName = "decimal(5, 2)")]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Price per unit")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; }
         [Required]
         [MaxLength(50)]
@@ -24,6 +26,7 @@ namespace DataLayer.Entities
         public bool Featured { get; set; }
         [MaxLength(50)]
         public string Summary { get; set; }
+        [DataType(DataType.ImageUrl)]
         public string ImageUrl { get; set; }
         public Category Category { get; set; }
         public Manufacturer Manufacturer { get; set; }

@@ -18,7 +18,7 @@ namespace EshopTest.ServiceLayer
         {
             // ARRANGE
             var options = new DbContextOptionsBuilder<ShopContext>()
-                .UseInMemoryDatabase(databaseName: "set_category_parentpath")
+                .UseInMemoryDatabase(databaseName: "get_category_hierarchy")
                 .Options;
             using (var context = new ShopContext(options))
             {

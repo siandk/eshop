@@ -11,10 +11,10 @@ namespace DataLayer.Entities
     {
         public int OrderId { get; set; }
         [Required]
-        public int CurrencyId { get; set; }
-        [Required]
         public int CustomerId { get; set; }
-        [Column(TypeName = "decimal(5, 2)")]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Order Total")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal AmountTotal
         {
             get
@@ -31,7 +31,10 @@ namespace DataLayer.Entities
             protected set { }
         }
         [MaxLength(150)]
+        [Display(Name = "Notes")]
         public string OrderNote { get; set; }
+        [DataType(DataType.Date)]
+        [Display(Name = "Date")]
         public DateTime OrderDate { get; set; }
         public Customer Customer { get; set; }
         public ICollection<OrderLine> OrderLines { get; set; }

@@ -10,16 +10,27 @@ namespace ServiceLayer.ShopService.Dto
     {
         [Key]
         public int ProductId { get; set; }
+        [Required]
         public int CategoryId { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Display(Name = "Category")]
         public string CategoryName { get; set; }
         public int? ManufacturerId { get; set; }
+        [Display(Name = "Manufacturer")]
         public string ManufacturerName { get; set; }
         public bool Published { get; set; }
         public bool Featured { get; set; }
+        [Required]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Price per unit")]
         public decimal UnitPrice { get; set; }
+        [MaxLength(250)]
         public string Description { get; set; }
+        [MaxLength(50)]
         public string Summary { get; set; }
+        [DataType(DataType.ImageUrl)]
+        public string ImageUrl { get; set; }
 
         public Product MapToProduct()
         {

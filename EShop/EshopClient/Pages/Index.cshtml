@@ -8,24 +8,42 @@
     <h2 class="display-4">Welcome to DropShipShop</h2>
 </div>
 <div class="container text-center">
+    <h3>Featured Products</h3>
     <div class="row">
         @foreach (var item in Model.FeaturedProducts)
         {
             <partial name="_ProductCardPartial" model="item" />
         }
     </div>
-    <div class="row">
-        <div class="col-4 m-5">
+
+    <div class="row text-center mt-3">
+        <div class="col-12">
+            @{
+                var prevDisabled = !Model.FeaturedProducts.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.FeaturedProducts.HasNextPage ? "disabled" : "";
+            }
+            <a class="btn btn-primary @prevDisabled" asp-for="./Index" asp-route-PageNum="@(Model.FeaturedProducts.PageIndex - 1)">Previous</a>
+            @for (int i = 1; i <= Model.FeaturedProducts.TotalPages; i++)
+            {
+                var activeNum = Model.PageNum == i ? "btn-light disabled" : "";
+                <a asp- class="btn @activeNum" asp-for="./Index" asp-route-PageNum="@i">@i</a>
+            }
+            <a class="btn btn-primary @nextDisabled" asp-for="./Index" asp-route-PageNum="@(Model.FeaturedProducts.PageIndex + 1)">Next</a>
+        </div>
+    </div>
+</div>
+    <div class="row text-center">
+        <div class="col-sm-12 col-md-6">
             <h3><a asp-area="" asp-page="/Shop/Index">Start Shopping!</a></h3>
         </div>
-        <div class="col-4 m-5">
+        <div class="col-sm-12 col-md-6">
             <h3><a asp-area="" asp-page="/Login">Login</a></h3>
             <p><a asp-page="/Register">Register</a></p>
         </div>
-        <div class="col-4 m-5">
+        <div class="col-sm-12 col-md-6">
             <h3><a asp-area="" asp-page="/Statistics">Show Statistics</a></h3>
         </div>
-        <div class="col-4 m-5">
+        <div class="col-sm-12 col-md-6">
             <h3><a asp-area="" asp-page="/Admin/Index">Administrate</a></h3>
         </div>
     </div>

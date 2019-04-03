@@ -4,14 +4,16 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20190402100838_ProductImageUrl")]
+    partial class ProductImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,8 +39,6 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.HasIndex("ParentPath");
-
                     b.ToTable("Categories");
                 });
 
@@ -55,7 +55,6 @@ namespace DataLayer.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<string>("Phone")
@@ -113,13 +112,13 @@ namespace DataLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("AmountTotal")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<int>("CurrencyId");
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<DateTime>("OrderDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("OrderDate");
 
                     b.Property<string>("OrderNote")
                         .HasMaxLength(150);
@@ -138,17 +137,17 @@ namespace DataLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("LinePrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.Property<decimal>("LineQuantity")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.Property<int>("OrderId");
 
                     b.Property<int>("ProductId");
 
                     b.Property<decimal>("UnitCostPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.HasKey("OrderLineId");
 
@@ -186,7 +185,7 @@ namespace DataLayer.Migrations
                         .HasMaxLength(50);
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.HasKey("ProductId");
 
@@ -206,7 +205,7 @@ namespace DataLayer.Migrations
                     b.Property<DateTime>("Date");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.HasKey("ProductId", "SupplierId");
 
@@ -274,7 +273,7 @@ namespace DataLayer.Migrations
                     b.HasOne("DataLayer.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DataLayer.Entities.Manufacturer", "Manufacturer")
                         .WithMany("Products")

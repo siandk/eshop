@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NToastNotify;
 using ServiceLayer.ShopService.Concrete;
 using ServiceLayer.ShopService.Interfaces;
 
@@ -40,7 +41,22 @@ namespace EshopClient
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<ISupplierService, SupplierService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddMemoryCache();
+            services.AddSession();
+
+            services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
+            {
+                ProgressBar = false,
+                PositionClass = ToastPositions.TopCenter
+            });
+            services.AddMiniProfiler(options =>
+            {
+                options.PopupShowTimeWithChildren = true;
+            })
+            .AddEntityFramework();
 
         }
 
@@ -60,7 +76,10 @@ namespace EshopClient
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseCookiePolicy();
+            app.UseMiniProfiler();
+            app.UseNToastNotify();
 
             app.UseMvc();
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using DataLayer;
 using DataLayer.Entities;
@@ -30,7 +31,6 @@ namespace EshopClient.Pages.Shop
         public string Name { get; set; }
         [BindProperty(SupportsGet = true)]
         public string ManufacturerName { get; set; }
-
         public PaginatedList<ProductDto> Products { get;set; }
         public SelectList Manufacturers { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -48,8 +48,7 @@ namespace EshopClient.Pages.Shop
             {
                 products = products.ProductFilterBy(ProductsFilterBy.ByManufacturer, ManufacturerName);
             }
-            Products = await PaginatedList<ProductDto>.CreateAsync(products, PageNum ?? 1, 3);
-            var manuf = _service.GetProductManufacturers().ToList();
+            Products = await PaginatedList<ProductDto>.CreateAsync(products, PageNum ?? 1, 4);
             Manufacturers = new SelectList(_service.GetProductManufacturers().ToList(), "Name", "Name");
         }
     }

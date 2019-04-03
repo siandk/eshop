@@ -17,7 +17,10 @@ namespace DataLayer.Entities
         [MaxLength(50)]
         public string Zip { get; set; }
         [MaxLength(50)]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
         [MaxLength(50)]
         public string Email { get; set; }
     }

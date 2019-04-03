@@ -9,7 +9,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="microsoft.jquery.unobtrusive.ajax" Version="3.2.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="miniprofiler.aspnetcore.mvc" Version="4.0.165" />
+    <PackageReference Include="miniprofiler.entityframeworkcore" Version="4.0.165" />
+    <PackageReference Include="ntoastnotify" Version="5.0.10" />
   </ItemGroup>
 
 
