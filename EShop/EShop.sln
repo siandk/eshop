@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLayer", "ServiceLaye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopClient", "EshopClient\EshopClient.csproj", "{ACC2EF5E-2DEA-4232-9886-A07754F0F443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EshopTest", "EshopTest\EshopTest.csproj", "{8750B91B-44BC-4BE9-AFCE-43CE4CC9DD43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopTest", "EshopTest\EshopTest.csproj", "{8750B91B-44BC-4BE9-AFCE-43CE4CC9DD43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

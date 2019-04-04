@@ -12,6 +12,7 @@ namespace DataLayer.Entities
         [Required]
         [MaxLength(150)]
         public string Name { get; set; }
+        public string UserGuid { get; set; }
         public ContactInfo ContactInfo { get; set; }
         public List<Order> Orders { get; set; }
     }

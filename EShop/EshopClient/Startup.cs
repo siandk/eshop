@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataLayer;
+using EshopClient.Areas.Identity.Data;
+using EshopClient.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +40,7 @@ namespace EshopClient
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // DBContext & Services
             services.AddDbContext<ShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EshopDbContext")));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
@@ -44,9 +49,23 @@ namespace EshopClient
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // Identity
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("isAdmin", policy => policy.RequireRole("admin"));
+            });
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Admin", "isAdmin");
+            });
+            services.AddTransient<AdminSeed>();
+
+            // Cache & Session
             services.AddMemoryCache();
             services.AddSession();
 
+
+            // Extras
             services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
             {
                 ProgressBar = false,
@@ -61,8 +80,9 @@ namespace EshopClient
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AdminSeed adminSeed)
         {
+            adminSeed.Initialize();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -80,7 +100,7 @@ namespace EshopClient
             app.UseCookiePolicy();
             app.UseMiniProfiler();
             app.UseNToastNotify();
-
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

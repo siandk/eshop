@@ -1,10 +1,15 @@
-﻿using System;
+﻿using DataLayer;
+using ServiceLayer.ShopService.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ServiceLayer.ShopService.Concrete
 {
-    class OrderService
+    public class OrderService : GenericService, IOrderService
     {
+        public OrderService(ShopContext context) : base(context)
+        {
+        }
     }
 }

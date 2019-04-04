@@ -6,11 +6,11 @@
 }
 
 <div class="container">
-    @if (@Model.Order != null)
+    @if (Model.Order != null && Model.Order.OrderLines != null && Model.Order.OrderLines.Count > 0)
     {
         <div class="row">
             <div class="col-6"></div>
-            <div class="col-6">@Model.Order.OrderLines.Sum(l => l.LinePrice)</div>
+            <div class="col-6"></div>
         </div>
         <div class="row">
             <div class="col-12">
@@ -40,7 +40,7 @@
                                     @Html.DisplayFor(modelItem => item.Quantity)
                                 </td>
                                 <td>
-                                   @(item.ProductUnitPrice * item.Quantity)
+                                   @Html.DisplayFor(modelItem => item.LinePrice)
                                 </td>
                                 <td>
                                     <form method="post" asp-page-handler="remove">
@@ -50,9 +50,23 @@
                                 </td>
                             </tr>
                         }
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td></td>
+                            <td>@Html.DisplayFor(model => model.Order.AmountTotal)</td>
+                            <td><a asp-page="/Shop/Checkout" class="btn btn-primary">Checkout</a></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+    }
+    else
+    {
+        <row class="text-center">
+            <div class="col-12">
+                <h3>There are no items in your cart!</h3>
+            </div>
+        </row>
     }
 </div>

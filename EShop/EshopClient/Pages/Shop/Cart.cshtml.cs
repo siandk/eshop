@@ -8,15 +8,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiceLayer.ShopService.Dto;
 using EshopClient.Data;
 using ServiceLayer.ShopService.Interfaces;
+using NToastNotify;
 
 namespace EshopClient.Pages.Shop
 {
     public class CartModel : PageModel
     {
+        private readonly IToastNotification _toastNotification;
         private readonly IProductService _service;
-        public CartModel(IProductService service)
+        public CartModel(IProductService service, IToastNotification toastNotification)
         {
             _service = service;
+            _toastNotification = toastNotification;
         }
         [BindProperty]
         public int ProductId { get; set; }
