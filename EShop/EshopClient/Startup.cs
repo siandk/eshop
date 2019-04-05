@@ -46,6 +46,8 @@ namespace EshopClient
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

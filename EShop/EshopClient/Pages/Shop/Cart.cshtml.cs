@@ -23,6 +23,7 @@ namespace EshopClient.Pages.Shop
         }
         [BindProperty]
         public int ProductId { get; set; }
+        [BindProperty]
         public OrderDto Order { get; set; }
         public void OnGet()
         {
@@ -36,7 +37,8 @@ namespace EshopClient.Pages.Shop
             ProductDto product = await _service.GetProductById(ProductId);
             if (product == null)
             {
-                return RedirectToPage();
+                _toastNotification.AddErrorToastMessage("Something went wrong!");
+                return RedirectToPage("/Shop/Index");
             }
             if (HttpContext.Session.Get("order") != null)
             {
@@ -46,12 +48,13 @@ namespace EshopClient.Pages.Shop
             }
             return RedirectToPage("/Shop/Cart");
         }
-        public async Task OnPostAdd(int ProductId)
+        public async Task<IActionResult> OnPostAdd(int ProductId)
         {
             ProductDto product = await _service.GetProductById(ProductId);
             if (product == null)
             {
-                return;
+                _toastNotification.AddErrorToastMessage("An error occurred. The product was not found");
+                return Partial("_NotificationPartial");
             }
             if (HttpContext.Session.Get("order") != null)
             {
@@ -84,6 +87,8 @@ namespace EshopClient.Pages.Shop
                 });
                 HttpContext.Session.Set<OrderDto>("order", order);
             }
+            _toastNotification.AddSuccessToastMessage($"{product.Name} added to cart");
+            return Partial("_NotificationPartial");
         }
     }
 }

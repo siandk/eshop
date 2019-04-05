@@ -54,7 +54,10 @@
                             <td><strong>Total</strong></td>
                             <td></td>
                             <td>@Html.DisplayFor(model => model.Order.AmountTotal)</td>
-                            <td><a asp-page="/Shop/Checkout" class="btn btn-primary">Checkout</a></td>
+                            <td>
+                                <a asp-page="/Shop/Checkout" class="btn btn-primary">Checkout</a>
+                                <a asp-page="/Shop/Index" class="btn btn-success">Keep Shopping</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

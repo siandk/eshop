@@ -1,16 +1,99 @@
 ﻿@page
 @model EshopClient.Pages.Shop.CheckoutModel
-@{
-    Layout = null;
-}
 
-<!DOCTYPE html>
+<div class="row">
+    <div class="col-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Customer.Name" class="control-label"></label>
+                        <input asp-for="Customer.Name" class="form-control" />
+                        <span asp-validation-for="Customer.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Customer.ContactInfo.City" class="control-label"></label>
+                        <input asp-for="Customer.ContactInfo.City" class="form-control" />
+                        <span asp-validation-for="Customer.ContactInfo.City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Customer.ContactInfo.Street" class="control-label"></label>
+                        <input asp-for="Customer.ContactInfo.Street" class="form-control" />
+                        <span asp-validation-for="Customer.ContactInfo.Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Customer.ContactInfo.Zip" class="control-label"></label>
+                        <input asp-for="Customer.ContactInfo.Zip" class="form-control" />
+                        <span asp-validation-for="Customer.ContactInfo.Zip" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Customer.ContactInfo.Phone" class="control-label"></label>
+                        <input asp-for="Customer.ContactInfo.Phone" class="form-control" />
+                        <span asp-validation-for="Customer.ContactInfo.Phone" class="text-danger"></span>
+                    </div>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <div class="form-group">
+                            <label asp-for="Customer.ContactInfo.Email" class="control-label"></label>
+                            <input asp-for="Customer.ContactInfo.Email" class="form-control" />
+                            <span asp-validation-for="Customer.ContactInfo.Email" class="text-danger"></span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label asp-for="Customer.ContactInfo.Country" class="control-label"></label>
+                        <input asp-for="Customer.ContactInfo.Country" class="form-control" />
+                        <span asp-validation-for="Customer.ContactInfo.Country" class="text-danger"></span>
+                    </div>
+                </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Checkout</title>
-</head>
-<body>
-</body>
-</html>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderLines[0].ProductName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderLines[0].Quantity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderLines[0].LinePrice)
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Order.OrderLines.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Order.OrderLines[i].ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Order.OrderLines[i].Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Order.OrderLines[i].LinePrice)
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td></td>
+                        <td>@Html.DisplayFor(model => model.Order.AmountTotal)</td>
+                        <td>
+                            <input type="submit" class="btn btn-success" value="Confirm" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+    </div>
+</div>

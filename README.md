@@ -18,12 +18,12 @@ Lægges en vare i kurven, vises den opdaterede varekurv
 - [x] Varekurven viser en opdateret liste af valgte produkter, med billede, navn, styk-pris, antal (skal kunne ændres) samt linjepriseen.
 - [ ] Der skal være en Update knap, som opdaterer priserne hvis man ændrer antallet.
 - [x] Det skal være muligt at fjerne et produkt fra varekurven, hvis man fortryder valget
-- [ ] Der skal være en Checkout knap, som fører til Checkout-siden
-- [ ] Der skal være en knap, der giver mulighed for at fortsætte med at handle, inden man går til checkout
+- [x] Der skal være en Checkout knap, som fører til Checkout-siden
+- [x] Der skal være en knap, der giver mulighed for at fortsætte med at handle, inden man går til checkout
 
 ### Krav til checkout
 
-- [ ] Brugeren skal afgive oplysninger om email, navn, adresse, valg af betalingsmiddel og forsendelse
+- [x] Brugeren skal afgive oplysninger om email, navn, adresse, valg af betalingsmiddel og forsendelse
 - [ ] Når brugeren trykke på Køb knappen, skal der udsendes en mail som bekræftelse af købet
 
 ### Optionelle krav til applikationen
