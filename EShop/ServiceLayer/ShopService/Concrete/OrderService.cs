@@ -23,6 +23,7 @@ namespace ServiceLayer.ShopService.Concrete
             Order order = sessionOrder.MapToOrder();
             order.CustomerId = customer.CustomerId;
             order.OrderLines.ForEach(l => l.UnitCostPrice = GetCostPrice(l.ProductId));
+            order.OrderLines.ForEach(l => l.Product = _context.Products.Find(l.ProductId));
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
         }

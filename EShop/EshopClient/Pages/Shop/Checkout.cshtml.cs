@@ -44,6 +44,10 @@ namespace EshopClient.Pages.Shop
                     Customer.ContactInfo.Email = User.Identity.Name;
                     await _customerService.Create<Customer>(Customer);
                 }
+                if (!string.IsNullOrEmpty(Customer.UserGuid) && User.Identity.IsAuthenticated)
+                {
+                    Customer =  await _customerService.GetByGuid(Customer.UserGuid).FirstOrDefaultAsync();
+                }
                 if (!User.Identity.IsAuthenticated)
                 {
                     await _customerService.Create<Customer>(Customer);
