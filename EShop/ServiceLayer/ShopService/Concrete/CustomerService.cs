@@ -17,5 +17,13 @@ namespace ServiceLayer.ShopService.Concrete
         {
             return _context.Customers.Where(c => c.UserGuid == guid);
         }
+        public IQueryable<Customer> GetCustomers()
+        {
+            return _context.Customers.Include(c => c.ContactInfo);
+        }
+        public IQueryable<Customer> GetCustomerById(int customerId)
+        {
+            return _context.Customers.Include(c => c.ContactInfo).Where(c => c.CustomerId == customerId);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace DataLayer
                 .HasOne(ps => ps.Supplier)
                 .WithMany(s => s.ProductSupplierPrices);
 
-            //
+            // Delete Behaviour
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category)

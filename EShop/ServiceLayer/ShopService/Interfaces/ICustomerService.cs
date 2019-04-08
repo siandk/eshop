@@ -10,5 +10,7 @@ namespace ServiceLayer.ShopService.Interfaces
     public interface ICustomerService : IGenericService
     {
         IQueryable<Customer> GetByGuid(string guid);
+        IQueryable<Customer> GetCustomers();
+        IQueryable<Customer> GetCustomerById(int customerId);
     }
 }

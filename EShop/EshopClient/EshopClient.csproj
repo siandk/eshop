@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\Admin\Manufacturers\" />
-    <Folder Include="Pages\Admin\Orders\" />
     <Folder Include="Pages\Admin\Suppliers\" />
   </ItemGroup>
 

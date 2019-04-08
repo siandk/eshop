@@ -27,6 +27,12 @@ namespace ServiceLayer.ShopService.Concrete
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
         }
+
+        public IQueryable<OrderDto> GetOrderById(int? orderId)
+        {
+            return _context.Orders.Include(o => o.OrderLines).ThenInclude(l => l.Product).Where(o => o.OrderId == orderId).MapOrderDto();
+        }
+
         public IQueryable<OrderDto> GetOrders()
         {
             return _context.Orders.Select(o => o).MapOrderDto();

@@ -13,5 +13,6 @@ namespace ServiceLayer.ShopService.Interfaces
         Task CheckoutOrder(OrderDto order, Customer customer);
         IQueryable<OrderDto> GetOrders();
         IQueryable<OrderDto> GetOrdersByCustomer(int customerId);
+        IQueryable<OrderDto> GetOrderById(int? orderId);
     }
 }
