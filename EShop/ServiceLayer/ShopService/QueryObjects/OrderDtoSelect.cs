@@ -14,6 +14,7 @@ namespace ServiceLayer.ShopService.QueryObjects
         {
             return orders.Include(o => o.Customer).Include(o => o.OrderLines).ThenInclude(l => l.Product).Select(o => new OrderDto()
             {
+                OrderId = o.OrderId,
                 CustomerId = o.CustomerId,
                 CustomerName = o.Customer.Name,
                 OrderDate = o.OrderDate,

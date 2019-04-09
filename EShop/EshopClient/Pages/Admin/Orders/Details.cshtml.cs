@@ -20,9 +20,14 @@ namespace EshopClient.Pages.Admin.Orders
             _service = service;
         }
         public OrderDto Order { get; set; }
-        public async Task OnGetAsync(int orderId)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Order = await _service.GetOrderById(orderId).FirstOrDefaultAsync();
+            Order = await _service.GetOrderById(id).FirstOrDefaultAsync();
+            if (Order == null)
+            {
+                return NotFound();
+            }
+            return Page();
         }
     }
 }

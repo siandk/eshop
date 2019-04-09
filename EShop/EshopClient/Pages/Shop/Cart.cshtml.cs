@@ -37,7 +37,7 @@ namespace EshopClient.Pages.Shop
             ProductDto product = await _service.GetProductById(ProductId);
             if (product == null)
             {
-                _toastNotification.AddErrorToastMessage("Something went wrong!");
+                _toastNotification.AddErrorToastMessage("An error occurred. The product was not found");
                 return RedirectToPage("/Shop/Index");
             }
             if (HttpContext.Session.Get("order") != null)

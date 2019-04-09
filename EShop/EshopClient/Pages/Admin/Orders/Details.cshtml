@@ -2,7 +2,68 @@
 @model EshopClient.Pages.Admin.Orders.DetailsModel
 
 <div class="row">
+    <div class="col-sm-12 col-md-5">
+        <h3>Order</h3><br />
+        <div>
+            <strong>@Html.DisplayNameFor(model => model.Order.CustomerName): </strong>
+            @Model.Order.CustomerName
+        </div>
+        <div>
+            <strong>@Html.DisplayNameFor(model => model.Order.OrderDate): </strong>
+            @Model.Order.OrderDate
+        </div>
+        <div>
+            <strong>@Html.DisplayNameFor(model => model.Order.Notes): </strong>
+            @Model.Order.Notes
+        </div>
+    </div>
+    <div class="col-sm-12 offset-md-1 col-md-5">
+    </div>
+</div>
+<div class="row mt-5">
     <div class="col-12">
-        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Order.OrderLines[0].ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Order.OrderLines[0].Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Order.OrderLines[0].ProductUnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Order.OrderLines[0].LinePrice)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Order.OrderLines)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductUnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LinePrice)
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><strong>@Html.DisplayNameFor(model => model.Order.AmountTotal)</strong></td>
+                    <td>@Html.DisplayFor(model => model.Order.AmountTotal)</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

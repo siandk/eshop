@@ -15,7 +15,9 @@ namespace ServiceLayer.ShopService.Dto
         }
         public int OrderId { get; set; }
         public int CustomerId { get; set; }
+        [Display(Name = "Customer")]
         public string CustomerName { get; set; }
+        [Display(Name = "Date")]
         public DateTime OrderDate { get; set; }
         public string Notes { get; set; }
         public List<OrderLineDto> OrderLines { get; set; }

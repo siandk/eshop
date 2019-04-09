@@ -88,6 +88,7 @@ namespace EshopClient
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMiniProfiler();
             }
             else
             {
@@ -100,7 +101,6 @@ namespace EshopClient
             app.UseStaticFiles();
             app.UseSession();
             app.UseCookiePolicy();
-            app.UseMiniProfiler();
             app.UseNToastNotify();
             app.UseAuthentication();
             app.UseMvc();
