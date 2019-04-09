@@ -4,6 +4,7 @@ using EshopTest.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceLayer.ShopService.Concrete;
+using ServiceLayer.ShopService.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,26 @@ namespace EshopTest.ServiceLayer
                 .Options;
             using (var context = new ShopContext(options))
             {
+                var dataSeed = new TestData(context);
+                dataSeed.Initialize();
+                Customer customer = context.Customers.Find(1);
+                OrderDto order = new OrderDto()
+                {
+                    OrderLines = new List<OrderLineDto>()
+                    {
+                        new OrderLineDto()
+                        {
+                            ProductId = 1,
+                            Quantity = 2,
+                        }
+                    }
+                };
+
                 // ACT
                 OrderService _service = new OrderService(context);
-                var order = _service.GetOrderById(3).First();
+                _service.CheckoutOrder(order, customer);
                 // ASSERT
-                Assert.AreEqual(order.OrderLines[0].ProductUnitCostPrice, 30M); 
+                Assert.AreEqual(7M, context.Orders.Last().OrderLines[0].UnitCostPrice); 
             }
         }
     }

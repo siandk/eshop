@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceLayer.ShopService.Concrete;
 using System.Linq;
+using EshopTest.Utilities;
 
 namespace EshopTest.ServiceLayer
 {
@@ -22,24 +23,14 @@ namespace EshopTest.ServiceLayer
                 .Options;
             using (var context = new ShopContext(options))
             {
-                List<Category> categoryList = new List<Category>()
-                {
-                    new Category() {Name = "Layer 0"},
-                    new Category() {Name = "Layer 1", ParentCategoryId = 1},
-                    new Category() {Name = "Layer 1.A", ParentCategoryId = 1},
-                    new Category() {Name = "Layer 1.B", ParentCategoryId = 1},
-                    new Category() {Name = "Layer 2", ParentCategoryId = 2},
-                    new Category() {Name = "Layer 3", ParentCategoryId = 5}
-                };
-                context.Categories.AddRange(categoryList);
-                context.SaveChanges();
-
+                var dataSeed = new TestData(context);
+                dataSeed.Initialize();
                 // ACT
                 CategoryService _service = new CategoryService(context);
                 var categoryDtos = _service.GetCategoryTree().ToList();
                 // ASSERT
-                Assert.AreEqual(6, categoryDtos.Count()); // All categories loaded
-                Assert.AreEqual(3, categoryDtos.Where(c => c.ParentCategoryId == null).SelectMany(c => c.ChildCategories).Count()); // 3 children directly under top level
+                Assert.AreEqual(5, categoryDtos.Count()); // All categories loaded
+                Assert.AreEqual(1, categoryDtos.Where(c => c.ParentCategoryId == null).SelectMany(c => c.ChildCategories).Count()); // 1 child directly under top level
                 Assert.AreEqual(1, categoryDtos.First().ChildCategories.First().ChildCategories.First().ChildCategories.Count()); // Nested categories are also loaded
             }
         }
