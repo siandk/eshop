@@ -1,6 +1,7 @@
 ﻿using DataLayer.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace EshopApi.Models
 {
     public class CustomerDto
     {
+        public CustomerDto() { }
         public CustomerDto(Customer customer)
         {
             CustomerId = customer.CustomerId;
@@ -19,12 +21,15 @@ namespace EshopApi.Models
             Email = customer.ContactInfo.Email;
             Country = customer.ContactInfo.Country;
         }
+        [Key]
         public int CustomerId { get; set; }
+        [Required]
         public string Name { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
         public string Street { get; set; }
         public string Phone { get; set; }
+        [Required]
         public string Email { get; set; }
         public string Country { get; set; }
 

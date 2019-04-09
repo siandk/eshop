@@ -60,7 +60,7 @@ Et eller flere eksempler på Custom Handler Methods
 - [ ] Applikationen er deployet on-premise
 - [x] Der er lavet et WebAPI med passende URL's til at tilgå ressourcerne
 - [x] Der er taget hensyn til at de hentede objekter fra WebAPI'et skal kunne benyttes af JavaScript kode
-- [ ] Swagger en konfigureret og anvendt
+- [x] Swagger en konfigureret og anvendt
 
 
 
