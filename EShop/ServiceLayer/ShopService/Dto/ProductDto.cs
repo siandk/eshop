@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace ServiceLayer.ShopService.Dto
@@ -23,6 +24,7 @@ namespace ServiceLayer.ShopService.Dto
         public bool Featured { get; set; }
         [Required]
         [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
         [Display(Name = "Price per unit")]
         public decimal UnitPrice { get; set; }
         [MaxLength(250)]
