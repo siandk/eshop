@@ -46,10 +46,6 @@ namespace EshopApi.Controllers
         [HttpPost]
         public async Task<ActionResult<OrderDto>> Post(OrderDto orderDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, "Invalid json object");
-            }
             Order order = orderDto.MapToOrder();
             await _orderService.Create<Order>(order);
             return Created($"/api/order/{order.OrderId}", order);

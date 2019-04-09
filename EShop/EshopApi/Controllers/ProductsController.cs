@@ -42,20 +42,12 @@ namespace EshopApi.Controllers
         [HttpPut]
         public async Task<ActionResult<ProductDto>> Put(ProductDto productDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, "Invalid json object");
-            }
             await _productService.Update(productDto.MapToProduct());
             return Ok();
         }
         [HttpPost]
         public async Task<ActionResult<ProductDto>> Post(ProductDto productDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, "Invalid json object");
-            }
             Product product = productDto.MapToProduct();
             await _productService.Create(product);
             return Created($"/api/order/{product.ProductId}", product);

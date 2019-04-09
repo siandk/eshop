@@ -30,20 +30,12 @@ namespace EshopApi.Controllers
         [HttpPost]
         public async Task<ActionResult<CategoryDto>> Post(CategoryDto category)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, "Invalid json object");
-            }
             await _categoryService.Create(category.ToCategory());
             return Created("/api/categories", category);
         }
         [HttpPut]
         public async Task<ActionResult<CategoryDto>> Put(CategoryDto category)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, "Invalid json object");
-            }
             await _categoryService.Update(category.ToCategory());
             return Ok();
         }

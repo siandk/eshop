@@ -47,10 +47,6 @@ namespace EshopApi.Controllers
         [HttpPost]
         public async Task<ActionResult<CustomerDto>> Post(CustomerDto customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, "Invalid json object");
-            }
             await _customerService.Create(customer.ToCustomer());
 
             return Created($"/api/customer/{customer.CustomerId}", customer);
@@ -58,10 +54,6 @@ namespace EshopApi.Controllers
         [HttpPut]
         public async Task<ActionResult<CustomerDto>> Put(CustomerDto customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, "Invalid json object");
-            }
             await _customerService.Update(customer.ToCustomer());
             return Ok();
         }

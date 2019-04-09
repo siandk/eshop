@@ -24,12 +24,15 @@ namespace EshopApi.Models
         [Key]
         public int CustomerId { get; set; }
         [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
         public string Street { get; set; }
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         public string Country { get; set; }
 
