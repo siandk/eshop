@@ -13,12 +13,12 @@ namespace EshopApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly IProductService _productService;
         private readonly IOrderService _orderService;
 
-        public OrderController(IProductService productService, IOrderService orderService)
+        public OrdersController(IProductService productService, IOrderService orderService)
         {
             _productService = productService;
             _orderService = orderService;

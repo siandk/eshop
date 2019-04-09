@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Entities;
+using EshopApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,21 +22,21 @@ namespace EshopApi.Controllers
             _categoryService = categoryService;
         }
         [HttpGet]
-        public async Task<ActionResult<List<Category>>> Get()
+        public async Task<ActionResult<List<CategoryDto>>> Get()
         {
-            List<Category> categories = await _categoryService.GetCategoryTree().ToListAsync();
+            List<CategoryDto> categories = await _categoryService.GetCategoryTree().Select(c => new CategoryDto(c)).ToListAsync();
             return Ok(categories);
         }
         [HttpPost]
-        public async Task<ActionResult<Category>> Post(Category category)
+        public async Task<ActionResult<CategoryDto>> Post(CategoryDto category)
         {
-            await _categoryService.Create(category);
+            await _categoryService.Create(category.ToCategory());
             return Created("/api/categories", category);
         }
         [HttpPut]
-        public async Task<ActionResult> Put(Category category)
+        public async Task<ActionResult> Put(CategoryDto category)
         {
-            await _categoryService.Update(category);
+            await _categoryService.Update(category.ToCategory());
             return Ok();
         }
         [HttpDelete("{categoryId}")]
