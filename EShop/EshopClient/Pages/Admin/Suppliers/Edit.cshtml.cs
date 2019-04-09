@@ -47,13 +47,8 @@ namespace EshopClient.Pages.Admin.Suppliers
                 return Page();
             }
 
-            await _service.Update<Supplier>(Supplier);
+            await _service.Update(Supplier);
             return RedirectToPage("./Index");
         }
-
-        //private bool ProductDtoExists(int id)
-        //{
-        //    return _context.ProductDto.Any(e => e.ProductId == id);
-        //}
     }
 }

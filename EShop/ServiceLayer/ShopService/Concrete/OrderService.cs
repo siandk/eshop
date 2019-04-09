@@ -20,10 +20,14 @@ namespace ServiceLayer.ShopService.Concrete
 
         public async Task CheckoutOrder(OrderDto sessionOrder, Customer customer)
         {
+            // Convert from DTO
             Order order = sessionOrder.MapToOrder();
+
+            // Set missing properties
             order.CustomerId = customer.CustomerId;
             order.OrderLines.ForEach(l => l.UnitCostPrice = GetCostPrice(l.ProductId));
             order.OrderLines.ForEach(l => l.Product = _context.Products.Find(l.ProductId));
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
         }
@@ -35,11 +39,11 @@ namespace ServiceLayer.ShopService.Concrete
 
         public IQueryable<OrderDto> GetOrders()
         {
-            return _context.Orders.Select(o => o).MapOrderDto();
+            return _context.Orders.AsNoTracking().Select(o => o).MapOrderDto();
         }
         public IQueryable<OrderDto> GetOrdersByCustomer(int customerId)
         {
-            return _context.Orders.Where(o => o.CustomerId == customerId).MapOrderDto();
+            return _context.Orders.AsNoTracking().Where(o => o.CustomerId == customerId).MapOrderDto();
         }
         private decimal GetCostPrice(int productId)
         {

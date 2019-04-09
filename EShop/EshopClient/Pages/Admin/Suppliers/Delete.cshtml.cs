@@ -50,7 +50,7 @@ namespace EshopClient.Pages.Admin.Suppliers
 
             if (Supplier != null)
             {
-                await _service.Delete<Supplier>(Supplier);
+                await _service.Delete(Supplier);
             }
 
             return RedirectToPage("./Index");

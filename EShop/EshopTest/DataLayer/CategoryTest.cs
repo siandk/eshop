@@ -28,7 +28,7 @@ namespace EshopTest.DataLayer
                                             .Include(c => c.ChildCategories)
                                             .Where(c => c.ParentCategoryId == 3)
                                             .First();
-                Assert.AreEqual("Layer 3", category.Name); // Check that the correct category has been fetched
+                Assert.AreEqual("Level 3", category.Name); // Check that the correct category has been fetched
                 Assert.AreEqual("/1/2/3/", category.ParentPath); // Check that the parentpath has been set correctly
             }
         }

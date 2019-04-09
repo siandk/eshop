@@ -34,28 +34,31 @@ namespace EshopClient.Pages.Shop
         public OrderDto Order { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
+            // Get the order stored in Session
             var sessionOrder = HttpContext.Session.Get<OrderDto>("order");
             if (sessionOrder != null && sessionOrder.OrderLines.Count > 0)
             {
-
+                // If user is logged in, but the associated Customer has no UserGuid (eg. the first time a new user uses the shop)
                 if (string.IsNullOrEmpty(Customer.UserGuid) && User.Identity.IsAuthenticated)
                 {
                     Customer.UserGuid = _userManager.GetUserId(User);
                     Customer.ContactInfo.Email = User.Identity.Name;
                     await _customerService.Create<Customer>(Customer);
                 }
+                // If the user is logged in and the associated Customer has a UserGuid
                 if (!string.IsNullOrEmpty(Customer.UserGuid) && User.Identity.IsAuthenticated)
                 {
                     Customer =  await _customerService.GetByGuid(Customer.UserGuid).FirstOrDefaultAsync();
                 }
+                // If the user is not logged in, create a new customer
                 if (!User.Identity.IsAuthenticated)
                 {
-                    await _customerService.Create<Customer>(Customer);
+                    await _customerService.Create(Customer);
                 }
                 await _orderService.CheckoutOrder(sessionOrder, Customer);
             }
             _toastNotification.AddSuccessToastMessage("Thank you for your order!");
-            HttpContext.Session.Set<OrderDto>("order", new OrderDto());
+            HttpContext.Session.Set("order", new OrderDto());
             return RedirectToPage("/Shop/Index");
         }
         public async Task OnGetAsync()
@@ -70,6 +73,7 @@ namespace EshopClient.Pages.Shop
             }
             if (User.Identity.IsAuthenticated)
             {
+                // Find logged in users associated Customer
                 Customer = await _customerService.GetByGuid(_userManager.GetUserId(User)).Include(c => c.ContactInfo).FirstOrDefaultAsync();
                 if (Customer == null)
                 {

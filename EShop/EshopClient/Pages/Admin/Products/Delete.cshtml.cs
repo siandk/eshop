@@ -50,7 +50,7 @@ namespace EshopClient.Pages.Admin.Products
 
             if (ProductDto != null)
             {
-                await _service.Delete<Product>(ProductDto.MapToProduct());
+                await _service.Delete(ProductDto.MapToProduct());
             }
 
             return RedirectToPage("./Index");

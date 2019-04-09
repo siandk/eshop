@@ -36,7 +36,7 @@ namespace EshopClient.Pages.Admin.Suppliers
             {
                 return Page();
             }
-            await _service.Create<Supplier>(Supplier);
+            await _service.Create(Supplier);
 
             return RedirectToPage("./Index");
         }

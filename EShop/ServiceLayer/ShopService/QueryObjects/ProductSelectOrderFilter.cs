@@ -21,7 +21,7 @@ namespace ServiceLayer.ShopService.QueryObjects
     }
     public enum ProductsOrderBy
     {
-        [Display(Name = "Sort by Name...")]
+        [Display(Name = "Name")]
         SimpleOrder = 0,
         [Display(Name = "Price ↑")]
         ByPriceAsc,
@@ -44,7 +44,8 @@ namespace ServiceLayer.ShopService.QueryObjects
                 Summary = p.Summary,
                 Name = p.Name,
                 UnitPrice = p.UnitPrice,
-                ManufacturerName = p.Manufacturer.Name
+                ManufacturerName = p.Manufacturer.Name,
+                ImageUrl = p.ImageUrl
             });
         }
         public static IQueryable<ProductDto> ProductFilterBy(this IQueryable<ProductDto> products, ProductsFilterBy filterBy, string filterValue)

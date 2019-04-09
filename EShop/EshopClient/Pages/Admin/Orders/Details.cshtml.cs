@@ -10,12 +10,12 @@ using ServiceLayer.ShopService.Interfaces;
 
 namespace EshopClient.Pages.Admin.Orders
 {
-    public class EditModel : PageModel
+    public class DetailsModel : PageModel
     {
 
         private readonly IOrderService _service;
 
-        public EditModel(IOrderService service)
+        public DetailsModel(IOrderService service)
         {
             _service = service;
         }

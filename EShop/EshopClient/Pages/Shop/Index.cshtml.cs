@@ -31,6 +31,8 @@ namespace EshopClient.Pages.Shop
         public string Name { get; set; }
         [BindProperty(SupportsGet = true)]
         public string ManufacturerName { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public ProductsOrderBy OrderBy { get; set; }
         public PaginatedList<ProductDto> Products { get;set; }
         public SelectList Manufacturers { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -41,6 +43,7 @@ namespace EshopClient.Pages.Shop
             var products = _service.GetProducts(CategoryId);
             if (!string.IsNullOrEmpty(Name))
             {
+                // Reset PageNum on each new search
                 PageNum = 1;
                 products = products.ProductFilterBy(ProductsFilterBy.ByName, Name);
             }
@@ -48,6 +51,7 @@ namespace EshopClient.Pages.Shop
             {
                 products = products.ProductFilterBy(ProductsFilterBy.ByManufacturer, ManufacturerName);
             }
+            products = products.ProductOrderBy(OrderBy);
             Products = await PaginatedList<ProductDto>.CreateAsync(products, PageNum ?? 1, 4);
             Manufacturers = new SelectList(_service.GetProductManufacturers().ToList(), "Name", "Name");
         }

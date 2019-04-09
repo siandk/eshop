@@ -44,7 +44,7 @@ namespace EshopClient.Pages.Shop
             {
                 OrderDto order = HttpContext.Session.Get<OrderDto>("order");
                 order.OrderLines.RemoveAll(l => l.ProductId == product.ProductId);
-                HttpContext.Session.Set<OrderDto>("order", order);
+                HttpContext.Session.Set("order", order);
             }
             return RedirectToPage("/Shop/Cart");
         }
@@ -56,13 +56,17 @@ namespace EshopClient.Pages.Shop
                 _toastNotification.AddErrorToastMessage("An error occurred. The product was not found");
                 return Partial("_NotificationPartial");
             }
+            // If an order is already present in the Session, add a new line or increase quantity
             if (HttpContext.Session.Get("order") != null)
             {
                 OrderDto order = HttpContext.Session.Get<OrderDto>("order");
-                if (order.OrderLines.Find(l => l.ProductId == ProductId) != null)
+                // Search for orderline with the product id, and increase quantity
+                OrderLineDto orderLine = order.OrderLines.Find(l => l.ProductId == ProductId);
+                if (orderLine != null)
                 {
-                    order.OrderLines.Find(l => l.ProductId == ProductId).Quantity += 1;
+                    orderLine.Quantity += 1;
                 }
+                // Else add a new line
                 else
                 {
                     order.OrderLines.Add(new OrderLineDto()
@@ -73,8 +77,9 @@ namespace EshopClient.Pages.Shop
                         Quantity = 1
                     });
                 }
-                HttpContext.Session.Set<OrderDto>("order", order);
+                HttpContext.Session.Set("order", order);
             }
+            // No order found in session, create a new
             else
             {
                 OrderDto order = new OrderDto();
@@ -85,7 +90,7 @@ namespace EshopClient.Pages.Shop
                     Quantity = 1,
                     ProductUnitPrice = product.UnitPrice
                 });
-                HttpContext.Session.Set<OrderDto>("order", order);
+                HttpContext.Session.Set("order", order);
             }
             _toastNotification.AddSuccessToastMessage($"{product.Name} added to cart");
             return Partial("_NotificationPartial");

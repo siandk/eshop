@@ -16,15 +16,20 @@ namespace EshopTest.Utilities
         public async void Initialize()
         {
             // Categories
-            List<Category> categoryList = new List<Category>()
-            {
-                new Category() { Name = "Root"},
-                new Category() { Name = "Level 1", ParentCategoryId = 1},
-                new Category() { Name = "Level 2", ParentCategoryId = 2},
-                new Category() { Name = "Level 2.A", ParentCategoryId = 2},
-                new Category() { Name = "Level 3", ParentCategoryId = 3}
-            };
-            _context.Categories.AddRange(categoryList);
+            var rootCategory = new Category() { Name = "Root" };
+            _context.Categories.Add(rootCategory);
+            await _context.SaveChangesAsync();
+            var level1 = new Category() { Name = "Level 1", ParentCategory = rootCategory };
+            _context.Categories.Add(level1);
+            await _context.SaveChangesAsync();
+            var level2 = new Category() { Name = "Level 2", ParentCategory = level1 };
+            _context.Categories.Add(level2);
+            await _context.SaveChangesAsync();
+            var level2a = new Category() { Name = "Level 2.A", ParentCategory = level1 };
+            _context.Categories.Add(level2a);
+            await _context.SaveChangesAsync();
+            var level3 = new Category() { Name = "Level 3", ParentCategory = level2 };
+            _context.Categories.Add(level3);
             await _context.SaveChangesAsync();
             // Manufacturers
             List<Manufacturer> manufacturerList = new List<Manufacturer>()

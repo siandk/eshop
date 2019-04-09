@@ -8,6 +8,9 @@
     <div class="col-sm-12 offset-md-3 col-md-9">
         <form>
             <p>
+                Order: <select asp-for="OrderBy" asp-items="Html.GetEnumSelectList(typeof(ProductsOrderBy))">
+                            <option value="">Order By..</option>
+                        </select>
                 Manufacturer: <select asp-for="ManufacturerName" asp-items="Model.Manufacturers">
                     <option value="">All</option>
                 </select>

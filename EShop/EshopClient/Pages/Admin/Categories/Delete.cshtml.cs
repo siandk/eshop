@@ -26,14 +26,14 @@ namespace EshopClient.Pages.Admin.Categories
         [BindProperty]
         public Category Category { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public ActionResult OnGet(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Category = await _service.GetCategoryById(id);
+            Category = _service.GetCategoryById(id).FirstOrDefault();
 
             if (Category == null)
             {
@@ -49,13 +49,13 @@ namespace EshopClient.Pages.Admin.Categories
                 return NotFound();
             }
 
-            Category = await _service.GetCategoryById(id);
+            Category = _service.GetCategoryById(id).FirstOrDefault();
 
             if (Category != null)
             {
                 try
                 {
-                    await _service.Delete<Category>(Category);
+                    await _service.Delete(Category);
                 }
                 catch (DbUpdateException)
                 {

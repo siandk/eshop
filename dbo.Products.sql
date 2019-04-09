@@ -17,10 +17,4 @@ FROM ParentCategories pc
 INNER JOIN Products p
 ON p.CategoryId = pc.CategoryId
 
-SELECT m.ManufacturerId, m.Name
-FROM ParentCategories pc
-INNER JOIN Products p
-ON p.CategoryId = pc.CategoryId
-INNER JOIN Manufacturers m
-ON m.ManufacturerId = p.ManufacturerId
 RETURN

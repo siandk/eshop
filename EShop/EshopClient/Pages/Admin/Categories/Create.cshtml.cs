@@ -22,22 +22,27 @@ namespace EshopClient.Pages.Admin.Categories
             _service = categoryService;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
 
         [BindProperty]
         public Category Category { get; set; }
         public SelectList ParentCategory => new SelectList(_service.GetCategoryTree().ToList(), "CategoryId", "Name");
 
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            await _service.Create<Category>(Category);
+            // Attach parent category entity, to make sure the parentpath is set correctly
+            if (Category.ParentCategoryId != null)
+            {
+                Category.ParentCategory = _service.GetCategoryById(Category.ParentCategoryId).First();
+            }
+            await _service.Create(Category);
 
             return RedirectToPage("./Index");
         }

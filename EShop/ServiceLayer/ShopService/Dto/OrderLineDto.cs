@@ -13,7 +13,8 @@ namespace ServiceLayer.ShopService.Dto
         [Display(Name = "Product")]
         public string ProductName { get; set; }
         public decimal Quantity { get; set; }
-        public decimal ProductUnitPrice { get; set; } // Hidden in view
+        public decimal ProductUnitPrice { get; set; }
+        public decimal ProductUnitCostPrice { get; set; }
         [Display(Name = "Price")]
         [DataType(DataType.Currency)]
         public decimal LinePrice

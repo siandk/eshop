@@ -19,7 +19,7 @@ namespace ServiceLayer.ShopService.Concrete
         }
         public IQueryable<Customer> GetCustomers()
         {
-            return _context.Customers.Include(c => c.ContactInfo);
+            return _context.Customers.AsNoTracking().Include(c => c.ContactInfo);
         }
         public IQueryable<Customer> GetCustomerById(int customerId)
         {

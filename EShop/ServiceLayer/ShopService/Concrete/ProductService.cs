@@ -58,13 +58,19 @@ namespace ServiceLayer.ShopService.Concrete
             var productPrices = _context.Products
                         .Include(p => p.ProductSupplierPrices)
                         .ThenInclude(ps => ps.Supplier)
-                        .SelectMany(p => p.ProductSupplierPrices);
+                        .SelectMany(p => p.ProductSupplierPrices)
+                        .AsNoTracking();
             return !productId.HasValue ? productPrices : productPrices.Where(ps => ps.ProductId == productId.Value);
 
         }
         public IQueryable<Manufacturer> GetProductManufacturers()
         {
-            return _context.Products.Where(p => p.ManufacturerId != null).Include(p => p.Manufacturer).Select(p => p.Manufacturer).Distinct();
+            return _context.Products
+                            .Where(p => p.ManufacturerId != null)
+                            .Include(p => p.Manufacturer)
+                            .Select(p => p.Manufacturer)
+                            .Distinct()
+                            .AsNoTracking();
         }
     }
 }

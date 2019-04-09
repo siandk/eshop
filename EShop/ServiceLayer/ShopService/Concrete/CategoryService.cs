@@ -20,9 +20,11 @@ namespace ServiceLayer.ShopService.Concrete
             return _context.Categories
                         .Include(c => c.ChildCategories);
         }
-        public async Task<Category> GetCategoryById(int? id)
+        public IQueryable<Category> GetCategoryById(int? id)
         {
-            return await _context.Categories.FirstOrDefaultAsync(c => c.CategoryId == id);
+            // Fetch all categories, to make sure the parent/child relationships are loaded
+            var categories = _context.Categories.ToList();
+            return categories.AsQueryable().Where(c => c.CategoryId == id);
         }
     }
 }

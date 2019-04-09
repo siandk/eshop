@@ -13,6 +13,7 @@ namespace ServiceLayer.ShopService.Dto
         {
             OrderLines = new List<OrderLineDto>();
         }
+        public int OrderId { get; set; }
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
         public DateTime OrderDate { get; set; }
@@ -32,6 +33,7 @@ namespace ServiceLayer.ShopService.Dto
         {
             return new Order()
             {
+                OrderId = OrderId,
                 CustomerId = CustomerId,
                 OrderDate = OrderDate,
                 OrderNote = Notes,

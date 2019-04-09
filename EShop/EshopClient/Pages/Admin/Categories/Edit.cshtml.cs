@@ -37,7 +37,7 @@ namespace EshopClient.Pages.Admin.Categories
             ParentCategory = new SelectList(await _service.GetCategoryTree()
                                                     .Where(c => (!c.ParentPath.Contains($"/{id}/") || c.ParentPath == null) && c.CategoryId != id)
                                                     .ToListAsync(), "CategoryId", "Name");
-            Category = await _service.GetCategoryById(id);
+            Category = _service.GetCategoryById(id).Include(c => c.ParentCategory).FirstOrDefault();
 
             if (Category == null)
             {
@@ -53,7 +53,7 @@ namespace EshopClient.Pages.Admin.Categories
                 return Page();
             }
 
-            await _service.Update<Category>(Category);
+            await _service.Update(Category);
             return RedirectToPage("./Index");
         }
     }

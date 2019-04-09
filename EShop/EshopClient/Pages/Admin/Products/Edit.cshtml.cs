@@ -31,6 +31,8 @@ namespace EshopClient.Pages.Admin.Products
         [BindProperty]
         public ProductDto ProductDto { get; set; }
         public List<ProductSupplierPrice> ProductPrices { get; set; }
+
+        // Property for creating new ProductPrices
         [BindProperty]
         public ProductSupplierPrice ProductPrice { get; set; }
         public SelectList Suppliers { get; set; }
@@ -42,41 +44,35 @@ namespace EshopClient.Pages.Admin.Products
             {
                 return NotFound();
             }
-
-            ProductPrice = new ProductSupplierPrice() { ProductId = id.Value };
             ProductDto = await _productService.GetProductById(id);
-            ProductPrices = await _productService.GetProductPrices(id).Include(ps => ps.Supplier).ToListAsync();
-            var suppliers = await _supplierService.GetSuppliers().Except(_productService.GetProductPrices(id).Select(ps => ps.Supplier)).ToListAsync();
-            Suppliers = new SelectList(suppliers, "SupplierId", "Name");
-
             if (ProductDto == null)
             {
                 return NotFound();
             }
+
+            // New Empty ProductPrice
+            ProductPrice = new ProductSupplierPrice() { ProductId = id.Value };
+            ProductPrices = await _productService.GetProductPrices(id).Include(ps => ps.Supplier).ToListAsync();
+
+            var suppliers = await _supplierService.GetSuppliers().Except(_productService.GetProductPrices(id).Select(ps => ps.Supplier)).ToListAsync();
+            Suppliers = new SelectList(suppliers, "SupplierId", "Name");
+
             return Page();
         }
         public async Task<IActionResult> OnPostPriceCreateAsync()
         {
-            if(!ModelState.IsValid)
-            {
-                return Page();
-            }
-            await _productService.Create<ProductSupplierPrice>(ProductPrice);
+            await _productService.Create(ProductPrice);
             return RedirectToPage("./Edit", new { id = ProductPrice.ProductId });
         }
         public async Task<IActionResult> OnPostPriceDeleteAsync(int supplierId, int productId)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
             var productPrice = await _productService.GetProductPrices().Where(p => p.SupplierId == supplierId && p.ProductId == productId).FirstOrDefaultAsync();
 
             if (productPrice == null)
             {
                 return Page();
             }
-            await _productService.Delete<ProductSupplierPrice>(productPrice);
+            await _productService.Delete(productPrice);
             return RedirectToPage("./Edit", new { id = productPrice.ProductId });
         }
         public async Task<IActionResult> OnPostAsync()
@@ -86,7 +82,7 @@ namespace EshopClient.Pages.Admin.Products
                 return Page();
             }
 
-            await _productService.Update<Product>(ProductDto.MapToProduct());
+            await _productService.Update(ProductDto.MapToProduct());
             return RedirectToPage("./Index");
         }
 

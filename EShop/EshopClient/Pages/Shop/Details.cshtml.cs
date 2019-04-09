@@ -7,19 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DataLayer;
 using DataLayer.Entities;
+using ServiceLayer.ShopService.Interfaces;
+using ServiceLayer.ShopService.Dto;
 
 namespace EshopClient.Pages.Shop
 {
     public class DetailsModel : PageModel
     {
-        private readonly DataLayer.ShopContext _context;
+        private readonly IProductService _service;
 
-        public DetailsModel(DataLayer.ShopContext context)
+        public DetailsModel(IProductService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        public Product Product { get; set; }
+        public ProductDto Product { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +30,7 @@ namespace EshopClient.Pages.Shop
                 return NotFound();
             }
 
-            Product = await _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Manufacturer).FirstOrDefaultAsync(m => m.ProductId == id);
+            Product = await _service.GetProductById(id);
 
             if (Product == null)
             {

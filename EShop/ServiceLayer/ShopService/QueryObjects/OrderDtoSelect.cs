@@ -23,7 +23,9 @@ namespace ServiceLayer.ShopService.QueryObjects
                     ProductName = l.Product.Name,
                     ProductUnitPrice = l.Product.UnitPrice,
                     Quantity = l.LineQuantity,
-                    LinePrice = l.LinePrice
+                    LinePrice = l.LinePrice,
+                    ProductUnitCostPrice = l.UnitCostPrice
+
                 }).ToList()
             });
         }

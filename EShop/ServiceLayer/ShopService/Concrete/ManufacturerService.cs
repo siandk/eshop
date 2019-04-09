@@ -23,7 +23,7 @@ namespace ServiceLayer.ShopService.Concrete
 
         public IQueryable<Manufacturer> GetManufacturers()
         {
-            return _context.Manufacturers;
+            return _context.Manufacturers.AsNoTracking();
         }
     }
 }

@@ -9,7 +9,7 @@
 - [x] Der benyttes Paging således at forsiden kun viser et bestemt antal produkter ad gangen. Man kan se at der evt. er flere produkter
 - [x] Der er mulighed for at søge på "Brand" og på "Type" eller lignende
 - [x] Der er også fritekst-søgning
-- [ ] Der er mulighed for stigende og faldende sortering
+- [x] Der er mulighed for stigende og faldende sortering
 - [x] Der vises et ikon med en varekurv og et antal varer i kurven. Klikkes på ikonet, vises varekurven
 Lægges en vare i kurven, vises den opdaterede varekurv
 
@@ -29,7 +29,7 @@ Lægges en vare i kurven, vises den opdaterede varekurv
 ### Optionelle krav til applikationen
 
 - [x] Forsiden viser "featured" produkter
-- [ ] Når musen passerer henover et billede af et produkt, fremhæves billedet (evt. med en skygge eller ramme)
+- [x] Når musen passerer henover et billede af et produkt, fremhæves billedet (evt. med en skygge eller ramme)
 - [x] Mulighed for at logge ind, f.eks. når man går til Checkout. 
 - [x] Hvis brugeren er logget ind, slipper brugeren for at registrere sig igen
 - [ ] Når brugeren er logget ind, vises produkter som anses for at være interessante for netop denne kunde, baseret på en profil
@@ -58,8 +58,8 @@ Et eller flere eksempler på Custom Handler Methods
 
 - [ ] Applikationen er klargjort til deployment (Minifying and Bundling, Environment osv.)
 - [ ] Applikationen er deployet on-premise
-- [ ] Der er lavet et WebAPI med passende URL's til at tilgå ressourcerne
-- [ ] Der er taget hensyn til at de hentede objekter fra WebAPI'et skal kunne benyttes af JavaScript kode
+- [x] Der er lavet et WebAPI med passende URL's til at tilgå ressourcerne
+- [x] Der er taget hensyn til at de hentede objekter fra WebAPI'et skal kunne benyttes af JavaScript kode
 - [ ] Swagger en konfigureret og anvendt
 
 
@@ -69,6 +69,6 @@ Et eller flere eksempler på Custom Handler Methods
 - [ ] Opret en custom Tag Helper og benyt den i et View
 - [x] Alle metodekald til ServiceLayer er asynkrone
 - [ ] Brug Bootstrap 4 til at fremhæve kontroller med fejl
-- [ ] En udbygget brug af Identity, som f.eks. mulighed for at nulstille password, email bekræftelse og roller.
+- [x] En udbygget brug af Identity, som f.eks. mulighed for at nulstille password, email bekræftelse og roller.
 - [ ] Der er indbygget Logging af alle transaktioner samt fejl.
 - [x] Anvendelse af Identity til brugeroprettelse og authentication.

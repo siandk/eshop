@@ -9,6 +9,10 @@ namespace DataLayer.Entities
 {
     public class Order
     {
+        public Order()
+        {
+            OrderLines = new List<OrderLine>();
+        }
         public int OrderId { get; set; }
         [Required]
         public int CustomerId { get; set; }

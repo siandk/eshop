@@ -11,6 +11,6 @@ namespace ServiceLayer.ShopService.Interfaces
     public interface ICategoryService : IGenericService
     {
         IQueryable<Category> GetCategoryTree();
-        Task<Category> GetCategoryById(int? id);
+        IQueryable<Category> GetCategoryById(int? id);
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Entities;
-using EshopApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +27,7 @@ namespace EshopApi.Controllers
             return Ok(customers);
         }
         [HttpGet("{customerId}")]
-        public async Task<ActionResult<CustomerInfo>> Get(int customerId, bool includeOrders = false)
+        public async Task<ActionResult<Customer>> Get(int customerId, bool includeOrders = false)
         {
             var customerQuery = _customerService.GetCustomerById(customerId);
             if (includeOrders)

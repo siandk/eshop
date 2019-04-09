@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DataLayer.Entities
 {
     public class Category
     {
+        public Category()
+        {
+            ChildCategories = new HashSet<Category>();
+        }
         public int CategoryId { get; set; }
         public int? ParentCategoryId { get; set; }
+
+        // Path to the top level category through the hierarchy
         public string ParentPath
         {
             get
@@ -33,10 +40,6 @@ namespace DataLayer.Entities
         public string Name { get; set; }
         public ICollection<Product> Products { get; set; }
         public Category ParentCategory { get; set; }
-        public List<Category> ChildCategories { get; set; }
-        public Category()
-        {
-            ChildCategories = new List<Category>();
-        }
+        public ICollection<Category> ChildCategories { get; set; }
     }
 }

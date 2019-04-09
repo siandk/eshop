@@ -44,7 +44,8 @@ namespace ServiceLayer.ShopService.Dto
                 Description = Description,
                 UnitPrice = UnitPrice,
                 Featured = Featured,
-                Published = Published
+                Published = Published,
+                ImageUrl = ImageUrl
 
             };
         }

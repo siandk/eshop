@@ -1,11 +1,10 @@
-﻿CREATE PROCEDURE [sp_GetSubCategories]
-	@rootId int
+﻿CREATE PROCEDURE [sp_GetAllCategories]
 AS
 	WITH ParentCategories AS
 	(
 	SELECT CategoryId, ParentCategoryId, Name
 	FROM Categories
-	WHERE CategoryId = @rootId
+	WHERE ParentCategoryId = null
 
 	UNION ALL
 	SELECT c.CategoryId, c.ParentCategoryId, c.Name

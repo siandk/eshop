@@ -43,7 +43,7 @@ namespace EshopClient.Pages.Admin.Products
             {
                 return Page();
             }
-            await _productService.Create<Product>(ProductDto.MapToProduct());
+            await _productService.Create(ProductDto.MapToProduct());
 
             return RedirectToPage("./Index");
         }
