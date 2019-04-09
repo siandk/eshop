@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20190326090744_initial")]
-    partial class initial
+    [Migration("20190409102016_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,9 +33,13 @@ namespace DataLayer.Migrations
 
                     b.Property<int?>("ParentCategoryId");
 
+                    b.Property<string>("ParentPath");
+
                     b.HasKey("CategoryId");
 
                     b.HasIndex("ParentCategoryId");
+
+                    b.HasIndex("ParentPath");
 
                     b.ToTable("Categories");
                 });
@@ -53,6 +57,7 @@ namespace DataLayer.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<string>("Phone")
@@ -69,32 +74,6 @@ namespace DataLayer.Migrations
                     b.ToTable("ContactInfo");
                 });
 
-            modelBuilder.Entity("DataLayer.Entities.Currency", b =>
-                {
-                    b.Property<int>("CurrencyId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<decimal>("CurrencyRate")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Symbol")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("CurrencyId");
-
-                    b.ToTable("Currency");
-                });
-
             modelBuilder.Entity("DataLayer.Entities.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
@@ -106,6 +85,8 @@ namespace DataLayer.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150);
+
+                    b.Property<string>("UserGuid");
 
                     b.HasKey("CustomerId");
 
@@ -126,7 +107,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("ManufacturerId");
 
-                    b.ToTable("Manufacturer");
+                    b.ToTable("Manufacturers");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Order", b =>
@@ -135,24 +116,19 @@ namespace DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("AmountCurrency")
-                        .HasColumnType("decimal(5, 2)");
-
                     b.Property<decimal>("AmountTotal")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<int>("CurrencyId");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<DateTime>("OrderDate");
+                    b.Property<DateTime>("OrderDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("OrderNote")
                         .HasMaxLength(150);
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("CurrencyId");
 
                     b.HasIndex("CustomerId");
 
@@ -166,14 +142,17 @@ namespace DataLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("LinePrice")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("LineQuantity")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("OrderId");
 
                     b.Property<int>("ProductId");
+
+                    b.Property<decimal>("UnitCostPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderLineId");
 
@@ -193,7 +172,11 @@ namespace DataLayer.Migrations
                     b.Property<int>("CategoryId");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(150);
+                        .HasMaxLength(250);
+
+                    b.Property<bool>("Featured");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<int?>("ManufacturerId");
 
@@ -203,8 +186,11 @@ namespace DataLayer.Migrations
 
                     b.Property<bool>("Published");
 
+                    b.Property<string>("Summary")
+                        .HasMaxLength(50);
+
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId");
 
@@ -224,7 +210,7 @@ namespace DataLayer.Migrations
                     b.Property<DateTime>("Date");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(5, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId", "SupplierId");
 
@@ -268,11 +254,6 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Entities.Order", b =>
                 {
-                    b.HasOne("DataLayer.Entities.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("DataLayer.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
@@ -297,7 +278,7 @@ namespace DataLayer.Migrations
                     b.HasOne("DataLayer.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("DataLayer.Entities.Manufacturer", "Manufacturer")
                         .WithMany("Products")
