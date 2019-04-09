@@ -35,6 +35,11 @@ namespace DataLayer
                 .WithOne(p => p.Category)
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Manufacturer>()
+                .HasMany(m => m.Products)
+                .WithOne(p => p.Manufacturer)
+                .HasForeignKey(p => p.ManufacturerId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             // Category path index
             modelBuilder.Entity<Category>()

@@ -78,7 +78,7 @@ namespace DataLayer.Migrations
                         column: x => x.ContactInfoId,
                         principalTable: "ContactInfo",
                         principalColumn: "ContactInfoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,7 +98,7 @@ namespace DataLayer.Migrations
                         column: x => x.ContactInfoId,
                         principalTable: "ContactInfo",
                         principalColumn: "ContactInfoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,7 +131,7 @@ namespace DataLayer.Migrations
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturers",
                         principalColumn: "ManufacturerId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,7 +153,7 @@ namespace DataLayer.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
