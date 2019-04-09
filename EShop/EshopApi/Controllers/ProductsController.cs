@@ -13,11 +13,11 @@ namespace EshopApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
 
-        public ProductController(IProductService productService)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
@@ -31,13 +31,37 @@ namespace EshopApi.Controllers
         public async Task<ActionResult<ProductDto>> Get(int productId)
         {
             ProductDto product = await _productService.GetProductById(productId);
-            return product.Published == true ? Ok(product) : StatusCode(StatusCodes.Status404NotFound, "Product not found");
+            return product != null && product.Published == true ? Ok(product) : StatusCode(StatusCodes.Status404NotFound, "Product not found");
         }
         [HttpGet("search")]
         public async Task<ActionResult<List<ProductDto>>> Get(string search)
         {
             List<ProductDto> products = await _productService.GetProducts().Where(p => p.Name.Contains(search)).ToListAsync();
             return Ok(products);
+        }
+        [HttpPut]
+        public async Task<ActionResult> Put(ProductDto productDto)
+        {
+            await _productService.Update(productDto.MapToProduct());
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<ActionResult<ProductDto>> Post(ProductDto productDto)
+        {
+            Product product = productDto.MapToProduct();
+            await _productService.Create(product);
+            return Created($"/api/order/{product.ProductId}", product);
+        }
+        [HttpDelete("{productId}")]
+        public async Task<ActionResult> Delete(int productId)
+        {
+            ProductDto product = await _productService.GetProductById(productId);
+            if ( product == null )
+            {
+                return StatusCode(StatusCodes.Status404NotFound, "Product not found");
+            }
+            await _productService.Delete(product);
+            return Ok();
         }
     }
 }
