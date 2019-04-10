@@ -1,5 +1,7 @@
 # eshop
-
+### Hierarchical Data
+[http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/](http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/)
+[http://scraping.pro/design-patterns-for-hierarchical-data-storage/](http://scraping.pro/design-patterns-for-hierarchical-data-storage/)
 
 ## Krav
 
@@ -57,7 +59,7 @@ Et eller flere eksempler på Custom Handler Methods
 - [x] Anvendt forskellige former for State Management, f.eks. Cookies, TempData, Session Variable og Caching
 
 - [ ] Applikationen er klargjort til deployment (Minifying and Bundling, Environment osv.)
-- [ ] Applikationen er deployet on-premise
+- [ ] Applikationen er deployet
 - [x] Der er lavet et WebAPI med passende URL's til at tilgå ressourcerne
 - [x] Der er taget hensyn til at de hentede objekter fra WebAPI'et skal kunne benyttes af JavaScript kode
 - [x] Swagger en konfigureret og anvendt
