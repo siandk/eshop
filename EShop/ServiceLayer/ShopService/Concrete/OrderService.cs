@@ -24,8 +24,10 @@ namespace ServiceLayer.ShopService.Concrete
             Order order = sessionOrder.MapToOrder();
 
             // Set missing properties
-            order.CustomerId = customer.CustomerId;
+            order.Customer = customer;
             order.OrderLines.ForEach(l => l.UnitCostPrice = GetCostPrice(l.ProductId));
+            // Needs the Product navigation property set before saving,
+            // otherwise the line total is not calculated.
             order.OrderLines.ForEach(l => l.Product = _context.Products.Find(l.ProductId));
 
             _context.Orders.Add(order);

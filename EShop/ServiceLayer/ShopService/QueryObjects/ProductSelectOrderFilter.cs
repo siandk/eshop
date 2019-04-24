@@ -44,6 +44,7 @@ namespace ServiceLayer.ShopService.QueryObjects
                 Summary = p.Summary,
                 Name = p.Name,
                 UnitPrice = p.UnitPrice,
+                ManufacturerId = p.ManufacturerId,
                 ManufacturerName = p.Manufacturer.Name,
                 ImageUrl = p.ImageUrl
             });

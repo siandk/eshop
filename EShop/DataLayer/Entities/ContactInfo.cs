@@ -8,14 +8,19 @@ namespace DataLayer.Entities
     public class ContactInfo
     {
         public int ContactInfoId { get; set; }
+        [Required]
         [MaxLength(50)]
         public string Country { get; set; }
+        [Required]
         [MaxLength(50)]
         public string Street { get; set; }
+        [Required]
         [MaxLength(50)]
         public string City { get; set; }
+        [Required]
         [MaxLength(50)]
         public string Zip { get; set; }
+        [Required]
         [MaxLength(50)]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }

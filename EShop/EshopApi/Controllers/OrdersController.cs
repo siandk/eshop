@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Entities;
+using EshopApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -47,8 +48,16 @@ namespace EshopApi.Controllers
         public async Task<ActionResult<OrderDto>> Post(OrderDto orderDto)
         {
             Order order = orderDto.MapToOrder();
-            await _orderService.Create<Order>(order);
-            return Created($"/api/order/{order.OrderId}", order);
+            await _orderService.Create(order);
+            return Created($"/api/orders/{order.OrderId}", order);
+        }
+        [HttpPost("Checkout")]
+        public async Task<ActionResult<CheckoutDto>> PostCheckout(CheckoutDto checkoutDto)
+        {
+            OrderDto order = checkoutDto.Order;
+            Customer customer = checkoutDto.Customer.ToCustomer();
+            await _orderService.CheckoutOrder(order, customer);
+            return Created($"/api/orders/{order.OrderId}", order);
         }
     }
 }

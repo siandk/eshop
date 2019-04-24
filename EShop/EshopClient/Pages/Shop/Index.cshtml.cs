@@ -52,7 +52,7 @@ namespace EshopClient.Pages.Shop
                 products = products.ProductFilterBy(ProductsFilterBy.ByManufacturer, ManufacturerName);
             }
             products = products.ProductOrderBy(OrderBy);
-            Products = await PaginatedList<ProductDto>.CreateAsync(products, PageNum ?? 1, 4);
+            Products = await PaginatedList<ProductDto>.CreateAsync(products, PageNum ?? 1, 8);
             Manufacturers = new SelectList(_service.GetProductManufacturers().ToList(), "Name", "Name");
         }
     }
